@@ -115,6 +115,25 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@theme {
+  /* Primary */
+  --color-primary-100: #FFEDFA;
+  --color-primary-200: #FFB8E0;
+  --color-primary-300: #EC7FA9;
+  --color-primary-400: #BE5985;
+
+  /* Secondary */
+  --color-secondary-100: #D2F9EF;
+  --color-secondary-300: #1DCD9F;
+  --color-secondary-400: #12B68C;
+
+  /* Text Color */
+  --color-primary-text: #212121;
+  --color-sub-text: #666666;
+
+  --color-line: #E0E0E0;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
