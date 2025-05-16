@@ -1,10 +1,78 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-
 @import "tailwindcss";
 @import "tw-animate-css";
 @tailwind utilities;
-
 @custom-variant dark (&:is(.dark *));
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========== Custom Font Utilities ========== */
+@layer components {
+  /* Font sizes*/
+  .f48 { font-size: 3rem; line-height: 1.4; }       /* 48px */
+  .f36 { font-size: 2.25rem; line-height: 1.4; }     /* 36px */
+  .f28 { font-size: 1.75rem; line-height: 1.4; }     /* 28px */
+  .f24 { font-size: 1.5rem; line-height: 1.5; }      /* 24px */
+  .f20 { font-size: 1.25rem; line-height: 1.5; }     /* 20px */
+  .f18 { font-size: 1.125rem; line-height: 1.5; }    /* 18px */
+  .f16 { font-size: 1rem; line-height: 1.5; }        /* 16px */
+  .f14 { font-size: 0.875rem; line-height: 1.5; }    /* 14px */
+  .f12 { font-size: 0.75rem; line-height: 1.5; }     /* 12px */
+
+  /* Font weights */
+  .text-regular  { font-weight: 400; }
+  .text-medium   { font-weight: 500; }
+  .text-semibold { font-weight: 600; }
+  .text-bold     { font-weight: 700; }
+
+  /* Font family */
+  .font-sans     { font-family: 'Pretendard', sans-serif; }
+
+  /* Letter spacing */
+  .tracking-tight { letter-spacing: -0.015em; }
+}
+
+/* ========== Custom Colors ========== */
+@layer utilities {
+  /* colors */
+  .color-primary-100 {
+    background-color: var(--color-primary-100);
+  }
+  .color-primary-200 {
+    background-color: var(--color-primary-200);
+  }
+  .color-primary-300 {
+    background-color: var(--color-primary-300);
+  }
+  .color-primary-400 {
+    background-color: var(--color-primary-400);
+  }
+
+  .color-secondary-100 {
+    background-color: var(--color-secondary-100);
+  }
+  .color-secondary-300 {
+    background-color: var(--color-secondary-300);
+  }
+  .color-secondary-400 {
+    background-color: var(--color-secondary-400);
+  }
+
+  /* Text colors */
+  .color-primary-text {
+    color: var(--color-primary-text);
+  }
+
+  .color-subtext {
+    color: var(--color-sub-text);
+  }
+
+  /* Border colors */
+  .color-line {
+    border-color: var(--color-line);
+  }
+}
 
 @theme inline {
   --color-background: var(--background);
