@@ -211,5 +211,6 @@
   body {
     font-family: 'Pretendard', sans-serif;
     @apply bg-background text-foreground;
+    height: 100vh;
   }
 }
