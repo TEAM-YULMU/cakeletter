@@ -9,7 +9,13 @@ type Props = {
 
 export function SignUpForm({ role }: Props) {
   return (
-    <FormCard title={role === "user" ? "일반 회원가입" : "사장님 회원가입"} footer={{ label: "이미 계정이 있으신가요?", href: "/login" }}>
+    <FormCard
+      title={role === "user" ? "일반 회원가입" : "사장님 회원가입"}
+      footer={{
+        label: "이미 계정이 있으신가요?",
+        links: [{ label: "로그인 페이지로 이동", href: "/login" }],
+      }}
+    >
       <form className="space-y-6">
         {/* 이름 */}
         <div className="space-y-1">
