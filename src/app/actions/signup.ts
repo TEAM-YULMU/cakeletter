@@ -28,6 +28,11 @@ export const signUp = async (_: unknown, formData: FormData) => {
   const { email, name, password, phone, birth: birthStr, gender } = validatedFields.data;
   const birth = new Date(birthStr);
 
+  const role = formData.get("role")?.toString().toUpperCase() as "USER" | "OWNER";
+  if (role !== "USER" && role !== "OWNER") {
+    return { errorMessage: "잘못된 사용자 유형입니다." };
+  }
+
   try {
     // 3. 존재하는 사용자 확인
     const existingUser = await getMemberByEmail(email);
@@ -50,7 +55,7 @@ export const signUp = async (_: unknown, formData: FormData) => {
         phone,
         birth,
         gender,
-        role: "USER", // default지만 명시해주는 게 안전
+        role,
       },
     });
   } catch (error) {
