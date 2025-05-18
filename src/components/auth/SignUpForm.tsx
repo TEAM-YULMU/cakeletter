@@ -41,6 +41,7 @@ export function SignUpForm({ role }: Props) {
       }}
     >
       <form action={action} className="space-y-6">
+        <input type="hidden" name="role" value={role.toUpperCase()} />
         {/* 이름 */}
         <div className="space-y-2">
           <Label htmlFor="name">이름</Label>
