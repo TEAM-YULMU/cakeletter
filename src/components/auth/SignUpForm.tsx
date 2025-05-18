@@ -63,7 +63,7 @@ export function SignUpForm({ role }: Props) {
         {/* 생년월일 */}
         <div className="space-y-2">
           <Label htmlFor="birth">생년월일</Label>
-          <Input id="birth" name="birth" type="date" onChange={handleChange} />
+          <Input id="birth" name="birth" type="date" onChange={handleChange} className="w-fit min-w-0 px-3" />
           {errors?.birth && <FormMessage message={errors.birth[0]} />}
         </div>
 
