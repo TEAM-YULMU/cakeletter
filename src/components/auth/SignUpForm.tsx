@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent } from "react";
+import { ChangeEvent, useActionState, useEffect } from "react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { FormCard } from "./FormCard";
@@ -10,18 +10,27 @@ import { TSignUpFormError } from "@/types/form";
 import { SignUpSchema } from "@/lib/schemas/auth";
 import { FormMessage } from "./FormMessage";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { signUp } from "@/app/actions/signup";
+import toast from "react-hot-toast";
 
 type Props = {
   role: "user" | "owner";
 };
 
 export function SignUpForm({ role }: Props) {
+  const [error, action] = useActionState(signUp, undefined);
   const { errors, validateField } = useFormValidate<TSignUpFormError>(SignUpSchema);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     validateField(name, value);
   };
+
+  useEffect(() => {
+    if (error?.errorMessage) {
+      toast.error(error.errorMessage);
+    }
+  }, [error]);
 
   return (
     <FormCard
@@ -31,7 +40,7 @@ export function SignUpForm({ role }: Props) {
         links: [{ label: "로그인 페이지로 이동", href: "/login" }],
       }}
     >
-      <form className="space-y-6">
+      <form action={action} className="space-y-6">
         {/* 이름 */}
         <div className="space-y-2">
           <Label htmlFor="name">이름</Label>
@@ -70,13 +79,13 @@ export function SignUpForm({ role }: Props) {
         {/* 성별 */}
         <div className="space-y-2">
           <Label htmlFor="gender">성별</Label>
-          <RadioGroup name="gender" defaultValue="male" className="flex gap-4" onValueChange={(value) => validateField("gender", value)}>
+          <RadioGroup name="gender" defaultValue="MALE" className="flex gap-4" onValueChange={(value) => validateField("gender", value)}>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="male" id="male" />
+              <RadioGroupItem value="MALE" id="male" />
               <Label htmlFor="male">남자</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="female" id="female" />
+              <RadioGroupItem value="FEMALE" id="female" />
               <Label htmlFor="female">여자</Label>
             </div>
           </RadioGroup>
