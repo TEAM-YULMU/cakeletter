@@ -29,7 +29,7 @@ export const SignUpSchema = z.object({
   birth: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: "생년월일을 선택해주세요.",
   }),
-  gender: z.enum(["male", "female"], {
+  gender: z.enum(["MALE", "FEMALE"], {
     message: "성별을 선택해주세요.",
   }),
 });
