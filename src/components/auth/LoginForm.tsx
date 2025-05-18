@@ -11,6 +11,7 @@ import { TLoginFormError } from "@/types/form";
 import { LoginSchema } from "@/lib/schemas/auth";
 import { login } from "@/app/actions/login";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 export function LoginForm() {
   const [error, action] = useActionState(login, undefined);
@@ -38,11 +39,15 @@ export function LoginForm() {
         ],
       }}
     >
+      {/* 로고 */}
+      <div className="mb-10 flex justify-center">
+        <Image src="/images/cakeletter.png" alt="CakeLetter 로고" width={110} height={110} />
+      </div>
       <form action={action} className="space-y-6">
         {/* 이메일 */}
         <div className="space-y-2">
           <Label htmlFor="email">이메일</Label>
-          <Input id="email" name="email" type="email" placeholder="example@example.com" onChange={handleChange} />
+          <Input id="email" name="email" type="email" placeholder="cakeletter@email.com" onChange={handleChange} />
           {errors?.email && <FormMessage message={errors?.email[0]} />}
         </div>
 

@@ -52,7 +52,7 @@ export function SignUpForm({ role }: Props) {
         {/* 이메일 */}
         <div className="space-y-2">
           <Label htmlFor="email">이메일</Label>
-          <Input id="email" name="email" type="email" placeholder="example@example.com" onChange={handleChange} />
+          <Input id="email" name="email" type="email" placeholder="cakeletter@email.com" onChange={handleChange} />
           {errors?.email && <FormMessage message={errors?.email[0]} />}
         </div>
 

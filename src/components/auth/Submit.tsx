@@ -8,8 +8,8 @@ type SubmitProps = ButtonProps & {
 export function Submit({ children, role = "user", className = "", ...others }: SubmitProps) {
   const { pending } = useFormStatus();
   const colorVariants = {
-    user: "color-primary-300 hover:bg-pink-500 text-white",
-    owner: "color-secondary-300 hover:bg-green-500 text-white",
+    user: "color-primary-300 hover:color-primary-400 text-white",
+    owner: "color-secondary-300 hover:color-secondary-400 text-white",
   };
 
   return (
