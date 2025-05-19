@@ -29,3 +29,20 @@ enum Role {
   USER
   OWNER
 }
+
+model Store {
+  storeId      Int    @id @default(autoincrement()) @map("store_id")
+  memberId     Int    @map("member_id")
+  name         String
+  openDays     Int  @map("open_days")
+  address      String
+  cityProvince String @map("city_province")
+  district     String
+  intro        String
+  content      String @db.Text
+  imageUrl     String @db.Text @map("image_url")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("store")
+}
