@@ -41,7 +41,7 @@ export const login = async (_: unknown, formData: FormData) => {
     }
 
     // 세션 생성
-    await createSession({ id, name, role });
+    await createSession({ id: String(id), name, role });
   } catch (error) {
     console.error("error", error);
     return {
