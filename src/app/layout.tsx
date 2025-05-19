@@ -4,7 +4,6 @@ import { Toaster } from "react-hot-toast";
 import { cookies } from "next/headers";
 import { verify } from "@/app/actions/sessions";
 import { SessionProvider } from "@/hooks/session-context";
-import Nav from "@/components/layout/Nav";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,6 +18,7 @@ export default async function RootLayout({
   const cookieStore = await cookies();
   const cookie = cookieStore.get("session")?.value;
   const session = await verify(cookie); // undefined 또는 { id, name, role }
+
   return (
     <html>
       <body>
