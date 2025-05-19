@@ -48,6 +48,9 @@
   .color-primary-400 {
     background-color: var(--color-primary-400);
   }
+  .hover\:color-primary-400:hover {
+    background-color: var(--color-primary-400);
+  }
 
   .color-secondary-100 {
     background-color: var(--color-secondary-100);
@@ -56,6 +59,9 @@
     background-color: var(--color-secondary-300);
   }
   .color-secondary-400 {
+    background-color: var(--color-secondary-400);
+  }
+  .hover\:color-secondary-400:hover {
     background-color: var(--color-secondary-400);
   }
 
@@ -211,5 +217,6 @@
   body {
     font-family: 'Pretendard', sans-serif;
     @apply bg-background text-foreground;
+    height: 100vh;
   }
 }
