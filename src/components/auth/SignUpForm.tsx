@@ -10,7 +10,7 @@ import { TSignUpFormError } from "@/types/form";
 import { SignUpSchema } from "@/lib/schemas/auth";
 import { FormMessage } from "./FormMessage";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { signUp } from "@/app/actions/signup";
+import { signUp } from "@/lib/actions/signup";
 import toast from "react-hot-toast";
 
 type Props = {
