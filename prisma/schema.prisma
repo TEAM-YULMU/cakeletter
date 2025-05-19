@@ -46,5 +46,55 @@ model Store {
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
 
-  member Member @relation(fields: [memberId], references: [id])
+  member  Member    @relation(fields: [memberId], references: [id])
+  Product Product[]
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  storeId     Int      @map("store_id")
+  name        String   @db.VarChar(40)
+  description String?  @db.VarChar(1000)
+  price       Int
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  store            Store            @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  optionCategories OptionCategory[]
+  Image            Image[]
+}
+
+model Image {
+  id        Int      @id @default(autoincrement())
+  productId Int      @map("product_id")
+  url       String   @db.VarChar(1000)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model OptionCategory {
+  id        Int      @id @default(autoincrement())
+  productId Int      @map("product_id")
+  name      String   @db.VarChar(40)
+  required  Boolean  @default(false)
+  multiple  Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  product     Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  optionItems OptionItem[]
+}
+
+model OptionItem {
+  id               Int      @id @default(autoincrement())
+  optionCategoryId Int      @map("option_category_id")
+  name             String   @db.VarChar(40)
+  description      String?  @db.VarChar(1000)
+  addtionalPrice   Int?
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  optionCategory OptionCategory? @relation(fields: [optionCategoryId], references: [id], onDelete: Cascade)
 }
