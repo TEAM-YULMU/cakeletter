@@ -34,7 +34,7 @@ enum Role {
 
 model Store {
   id           Int      @id @default(autoincrement())
-  memberId     Int      @unique
+  memberId     Int      @unique @map("member_id")
   name         String
   openDays     Int      @map("open_days")
   address      String

@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
     const stores = await prisma.store.findMany({
       where,
       select: {
-        storeId: true,
+        id: true,
         name: true,
         cityProvince: true,
         district: true,
