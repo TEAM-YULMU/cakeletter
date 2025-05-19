@@ -5,7 +5,7 @@ import React from "react";
 type FooterLink = { label: string; href: string };
 
 type Props = {
-  title: string;
+  title?: string;
   footer: {
     label?: string;
     links?: FooterLink[];
@@ -17,7 +17,7 @@ export function FormCard({ title, footer, children }: Props) {
   const { label, links = [] } = footer;
 
   return (
-    <Card className="flex w-[500px] flex-col items-center border">
+    <Card className="flex w-[35rem] flex-col items-center border-none shadow-none">
       <CardHeader className="w-full text-center">
         <CardTitle className="text-2xl font-bold">{title}</CardTitle>
       </CardHeader>
