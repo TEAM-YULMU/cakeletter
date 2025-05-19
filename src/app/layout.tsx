@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { cookies } from "next/headers";
-import { verify } from "@/app/actions/sessions";
+import { verify } from "@/lib/actions/sessions";
 import { SessionProvider } from "@/hooks/session-context";
 
 export const metadata: Metadata = {

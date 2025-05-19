@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import { verify } from "./app/actions/sessions";
+import { verify } from "./lib/actions/sessions";
 import { AUTH_ROUTES, BASE_URL, PUBLIC_ROUTES } from "./constants/routes";
 
 export async function middleware(request: NextRequest) {

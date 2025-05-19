@@ -9,7 +9,7 @@ import { FormMessage } from "./FormMessage";
 import { Submit } from "./Submit";
 import { TLoginFormError } from "@/types/form";
 import { LoginSchema } from "@/lib/schemas/auth";
-import { login } from "@/app/actions/login";
+import { login } from "@/lib/actions/login";
 import toast from "react-hot-toast";
 import { Logo } from "../layout/Logo";
 
