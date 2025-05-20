@@ -1,11 +1,11 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+@import "tailwindcss";
+@import "tw-animate-css";
 @custom-variant dark (&:is(.dark *));
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import "tw-animate-css";
 
 /* ========== Custom Font Utilities ========== */
 @layer components {
