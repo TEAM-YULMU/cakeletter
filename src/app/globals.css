@@ -1,11 +1,11 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-@import "tailwindcss";
-@import "tw-animate-css";
-@tailwind utilities;
 @custom-variant dark (&:is(.dark *));
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import "tw-animate-css";
 
 /* ========== Custom Font Utilities ========== */
 @layer components {
@@ -35,51 +35,27 @@
 
 /* ========== Custom Colors ========== */
 @layer utilities {
-  /* colors */
-  .color-primary-100 {
-    background-color: var(--color-primary-100);
-  }
-  .color-primary-200 {
-    background-color: var(--color-primary-200);
-  }
-  .color-primary-300 {
-    background-color: var(--color-primary-300);
-  }
-  .color-primary-400 {
-    background-color: var(--color-primary-400);
-  }
-  .hover\:color-primary-400:hover {
-    background-color: var(--color-primary-400);
-  }
+  /* Primary colors */
+  .color-primary-100 { background-color: var(--color-primary-100); }
+  .color-primary-200 { background-color: var(--color-primary-200); }
+  .color-primary-300 { background-color: var(--color-primary-300); }
+  .color-primary-400 { background-color: var(--color-primary-400); }
 
-  .color-secondary-100 {
-    background-color: var(--color-secondary-100);
-  }
-  .color-secondary-300 {
-    background-color: var(--color-secondary-300);
-  }
-  .color-secondary-400 {
-    background-color: var(--color-secondary-400);
-  }
-  .hover\:color-secondary-400:hover {
-    background-color: var(--color-secondary-400);
-  }
+  /* Secondary colors */
+  .color-secondary-100 { background-color: var(--color-secondary-100); }
+  .color-secondary-300 { background-color: var(--color-secondary-300); }
+  .color-secondary-400 { background-color: var(--color-secondary-400); }
+  .hover\:color-secondary-400:hover { background-color: var(--color-secondary-400); }
 
   /* Text colors */
-  .color-primary-text {
-    color: var(--color-primary-text);
-  }
+  .color-primary-text { color: var(--color-primary-text); }
+  .color-subtext { color: var(--color-sub-text); }
 
-  .color-subtext {
-    color: var(--color-sub-text);
-  }
-
-  /* Border colors */
-  .color-line {
-    border-color: var(--color-line);
-  }
+  /* Border color */
+  .color-line { border-color: var(--color-line); }
 }
 
+/* ========== Theme Variables (shadcn, sidebar 등) ========== */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -120,6 +96,7 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* ========== 기본 색상, 폰트, 라운드 등 변수 선언 ========== */
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -156,6 +133,7 @@
   --font-sans: 'Pretendard', sans-serif;
 }
 
+/* 다크모드 변수 오버라이드 */
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
@@ -190,6 +168,7 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* ========== 프로젝트 전역 색상 변수 선언 ========== */
 @theme {
   /* Primary */
   --color-primary-100: #FFEDFA;
@@ -209,6 +188,7 @@
   --color-line: #E0E0E0;
 }
 
+/* ========== Tailwind Base Layer 커스터마이즈 ========== */
 @layer base {
   * {
     @apply border-border outline-ring/50;
