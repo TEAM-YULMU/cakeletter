@@ -1,15 +1,10 @@
+"use client";
+
 import { CirclePlus, X } from "lucide-react";
 import { Label } from "../ui/label";
 import LabelWithInput from "../Label-With-Input";
-import { useState } from "react";
 import OptionItemInputForm from "./Option-item-Input-Form";
-
-type ProductOptionItem = {
-  id: string;
-  name: string;
-  desc?: string;
-  additionalPrice?: number;
-};
+import { useProductContext } from "@/contexts/ProductContext";
 
 type Props = {
   index: number;
@@ -17,23 +12,20 @@ type Props = {
 };
 
 export default function OptionInputForm({ index, onRemoveOption }: Props) {
-  const [items, setItems] = useState<ProductOptionItem[]>([]);
+  const { state, dispatch } = useProductContext();
 
   const optionName = `option${index}`;
 
+  const handleChangeOptionName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: "UPDATE_OPTION_GROUP", index: index, optionName: event.target.value });
+  };
+
   const handleAddItem = () => {
-    const id = crypto.randomUUID();
-    setItems((prev) => [
-      ...prev,
-      {
-        id: id,
-        name: "",
-      },
-    ]);
+    dispatch({ type: "ADD_OPTION_ITEM", optionIndex: index });
   };
 
   const handleRemoveItem = (itemIdx: number) => {
-    setItems((prev) => prev.filter((_, index) => index !== itemIdx));
+    dispatch({ type: "REMOVE_OPTION_ITEM", optionIndex: index, itemIndex: itemIdx });
   };
 
   return (
@@ -45,13 +37,14 @@ export default function OptionInputForm({ index, onRemoveOption }: Props) {
         </button>
       </div>
 
-      <LabelWithInput label="옵션 제목" name={`${optionName}-name`} placeholder="추가할 옵션의 제목을 입력해주세요" />
+      <LabelWithInput label="옵션 제목" name={`${optionName}-name`} placeholder="추가할 옵션의 제목을 입력해주세요" onChange={handleChangeOptionName} />
 
-      {items.map((item, index) => (
-        <div key={item.id}>
-          <OptionItemInputForm index={index} optionFormName={optionName} onRemoveItem={handleRemoveItem} />
-        </div>
-      ))}
+      {state.options[index] &&
+        state.options[index].items.map((item, itemIndex) => (
+          <div key={item.id}>
+            <OptionItemInputForm optionIndex={index} index={itemIndex} optionFormName={optionName} onRemoveItem={handleRemoveItem} />
+          </div>
+        ))}
 
       <button className="pointer-events-none flex cursor-pointer justify-center" type="button" onClick={handleAddItem}>
         <CirclePlus className="text-sub-text pointer-events-auto h-[22px] w-[22px]" />

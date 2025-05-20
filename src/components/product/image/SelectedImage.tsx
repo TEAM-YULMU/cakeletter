@@ -1,9 +1,8 @@
 import SquareImage from "@/components/SquareImage";
 import { X } from "lucide-react";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 type Props = {
-  src: string | StaticImport;
+  src: string | File;
   alt: string;
   size: number;
   isFixedSize?: boolean;
