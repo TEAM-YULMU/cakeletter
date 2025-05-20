@@ -17,6 +17,7 @@
   .f16 { font-size: 1rem; line-height: 1.5; }        /* 16px */
   .f14 { font-size: 0.875rem; line-height: 1.5; }    /* 14px */
   .f12 { font-size: 0.75rem; line-height: 1.5; }     /* 12px */
+  .f10 { font-size: 0.625rem; line-height: 1.5; }    /* 10px */
 
   /* Font weights */
   .text-regular  { font-weight: 400; }
