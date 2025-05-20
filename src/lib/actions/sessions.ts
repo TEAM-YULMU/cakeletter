@@ -1,3 +1,5 @@
+"use server";
+
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -44,6 +46,7 @@ export const createSession = async (payload: SessionPayload) => {
 export const deleteSession = async () => {
   const cookieStore = await cookies();
   cookieStore.delete("session");
+  redirect("/");
 };
 
 export const verifySession = async () => {
