@@ -21,7 +21,7 @@ export default async function RootLayout({
 
   return (
     <html>
-      <body>
+      <body className="w-full">
         <Toaster />
         <SessionProvider session={session}>{children}</SessionProvider>
       </body>
