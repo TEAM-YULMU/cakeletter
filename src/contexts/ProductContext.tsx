@@ -1,6 +1,6 @@
 "use client";
 
-import { OptionItem, Product } from "@/types/product";
+import { OptionCategory, OptionItem, Product } from "@/types/product";
 import { createContext, PropsWithChildren, useContext, useReducer } from "react";
 
 type State = Product;
@@ -11,7 +11,7 @@ type Action =
   | { type: "REMOVE_IMAGE"; index: number }
   | { type: "ADD_OPTION_GROUP" }
   | { type: "REMOVE_OPTION_GROUP"; index: number }
-  | { type: "UPDATE_OPTION_GROUP"; index: number; optionName: string }
+  | { type: "UPDATE_OPTION_GROUP"; index: number; key: keyof OptionCategory; value: string | boolean }
   | { type: "ADD_OPTION_ITEM"; optionIndex: number }
   | { type: "REMOVE_OPTION_ITEM"; optionIndex: number; itemIndex: number }
   | { type: "UPDATE_OPTION_ITEM"; optionIndex: number; itemIndex: number; key: keyof OptionItem; value: string };
@@ -73,7 +73,7 @@ function reducer(state: State, action: Action): State {
           idx === action.index
             ? {
                 ...g,
-                name: action.optionName,
+                [action.key]: action.value,
               }
             : g
         ),

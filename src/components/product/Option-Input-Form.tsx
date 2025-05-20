@@ -5,6 +5,8 @@ import { Label } from "../ui/label";
 import LabelWithInput from "../Label-With-Input";
 import OptionItemInputForm from "./Option-item-Input-Form";
 import { useProductContext } from "@/contexts/ProductContext";
+import LabelWithCheckBox from "../Label-With-CheckBox";
+import { CheckedState } from "@radix-ui/react-checkbox";
 
 type Props = {
   index: number;
@@ -17,7 +19,15 @@ export default function OptionInputForm({ index, onRemoveOption }: Props) {
   const optionName = `option${index}`;
 
   const handleChangeOptionName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: "UPDATE_OPTION_GROUP", index: index, optionName: event.target.value });
+    dispatch({ type: "UPDATE_OPTION_GROUP", index: index, key: "name", value: event.target.value });
+  };
+
+  const handleChangeRequired = (checked: CheckedState) => {
+    dispatch({ type: "UPDATE_OPTION_GROUP", index: index, key: "required", value: checked });
+  };
+
+  const handleChangeMultiple = (checked: CheckedState) => {
+    dispatch({ type: "UPDATE_OPTION_GROUP", index: index, key: "multiple", value: checked });
   };
 
   const handleAddItem = () => {
@@ -35,6 +45,11 @@ export default function OptionInputForm({ index, onRemoveOption }: Props) {
         <button className="cursor-pointer" type="button" onClick={() => onRemoveOption(index)}>
           <X className="text-sub-text h-[22px] w-[22px]" />
         </button>
+      </div>
+
+      <div className="grid grid-cols-2">
+        <LabelWithCheckBox label="필수 선택" checked={state.options[index].required} onChange={handleChangeRequired} />
+        <LabelWithCheckBox label="다중 선택 가능" checked={state.options[index].multiple} onChange={handleChangeMultiple} />
       </div>
 
       <LabelWithInput label="옵션 제목" name={`${optionName}-name`} placeholder="추가할 옵션의 제목을 입력해주세요" onChange={handleChangeOptionName} />
