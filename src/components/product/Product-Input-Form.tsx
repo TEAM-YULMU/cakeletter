@@ -9,7 +9,11 @@ import OptionInputForm from "./Option-Input-Form";
 import { Button } from "../ui/button";
 import { useProductContext } from "@/contexts/ProductContext";
 
-export default function ProductInputForm() {
+type Props = {
+  isSubmitting: boolean;
+};
+
+export default function ProductInputForm({ isSubmitting }: Props) {
   const { state, dispatch } = useProductContext();
   const [price, setPrice] = useState("");
 
@@ -66,7 +70,7 @@ export default function ProductInputForm() {
         </div>
       ))}
 
-      <Button className="bg-secondary-300 hover:bg-secondary-400 flex h-[48px] w-full" type="submit">
+      <Button className="bg-secondary-300 hover:bg-secondary-400 flex h-[48px] w-full" type="submit" disabled={isSubmitting}>
         완료
       </Button>
     </div>

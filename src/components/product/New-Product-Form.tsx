@@ -5,8 +5,10 @@ import FileImageForm from "./image/File-Image-Form";
 import ProductInputForm from "./Product-Input-Form";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 const NewProductForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const { state } = useProductContext();
 
@@ -18,8 +20,9 @@ const NewProductForm = () => {
       return;
     }
 
-    const formData = new FormData();
+    setIsSubmitting(true);
 
+    const formData = new FormData();
     formData.append("name", state.name);
     formData.append("description", state.description);
     formData.append("price", state.price.toString());
@@ -40,17 +43,19 @@ const NewProductForm = () => {
         router.push("/owner");
       } else {
         toast.error(await response.text());
+        setIsSubmitting(false);
       }
     } catch (error) {
       toast.error("상품 등록에 실패했습니다.");
       console.log(error);
+      setIsSubmitting(false);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-row gap-[42px]">
       <FileImageForm name="image" />
-      <ProductInputForm />
+      <ProductInputForm isSubmitting={isSubmitting} />
     </form>
   );
 };
