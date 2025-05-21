@@ -6,8 +6,8 @@ import Link from "next/link";
 
 export function StoreCard({ id, name, imageUrl }: StoreCardProps) {
   return (
-    <Link href={`/store/${id}`}>
-      <div className="relative mt-10.5 overflow-hidden rounded-md border-1 hover:scale-[1.02]">
+    <div className="relative mt-10.5 overflow-hidden rounded-md border-1 hover:scale-[1.02]">
+      <Link href={`/store/${id}`}>
         <div className="relative h-[16rem] w-full">
           <Image src={imageUrl} alt={name} fill className="object-cover" />
         </div>
@@ -16,7 +16,7 @@ export function StoreCard({ id, name, imageUrl }: StoreCardProps) {
           <h3 className="f20 text-medium text-primary-text">{name}</h3>
           <p className="f10 mt-2 text-black">See More &gt;</p>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 }
