@@ -5,6 +5,7 @@ import PlusBox from "../../plus-box";
 import { ImageInput } from "../../Image-Input";
 import SelectedImage from "./SelectedImage";
 import { useProductContext } from "@/contexts/ProductContext";
+import toast from "react-hot-toast";
 
 type Props = {
   name: string;
@@ -28,7 +29,7 @@ export default function FileImageForm({ name }: Props) {
     }
 
     if (state.images.length + files.length > maxImageCount) {
-      alert("최대 5장까지만 추가할 수 있습니다.");
+      toast.error("최대 5장까지만 추가할 수 있습니다.");
       return;
     }
 
