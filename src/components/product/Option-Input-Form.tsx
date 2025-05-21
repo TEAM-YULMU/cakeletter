@@ -39,7 +39,7 @@ export default function OptionInputForm({ index, onRemoveOption }: Props) {
   };
 
   return (
-    <div className="flex flex-col gap-[14px] bg-[#D9D9D9] p-[20px]">
+    <div className="flex flex-col gap-[14px] rounded-md bg-[#F5F5F5] p-[20px]">
       <div className="flex flex-row justify-between">
         <Label className="text-sub-text">Option{index + 1}</Label>
         <button className="cursor-pointer" type="button" onClick={() => onRemoveOption(index)}>

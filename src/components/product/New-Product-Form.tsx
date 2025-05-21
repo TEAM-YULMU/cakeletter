@@ -53,7 +53,7 @@ const NewProductForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-row gap-[42px]">
+    <form onSubmit={handleSubmit} className="product-form flex justify-center">
       <FileImageForm name="image" />
       <ProductInputForm isSubmitting={isSubmitting} />
     </form>

@@ -1,7 +1,7 @@
 "use client";
 
 import { ChangeEvent, useRef } from "react";
-import PlusBox from "../../plus-box";
+import CakeImageBox from "../../Cake-Image-Box";
 import { ImageInput } from "../../Image-Input";
 import SelectedImage from "./SelectedImage";
 import { useProductContext } from "@/contexts/ProductContext";
@@ -49,7 +49,7 @@ export default function FileImageForm({ name }: Props) {
   return (
     <div className="w-full" style={{ maxWidth: `${maxWidth}px` }}>
       <ImageInput name={name} onChange={handleSelectImages} ref={imageInput} />
-      {state.images.length === 0 && <PlusBox size={550} onClick={handleClickToAddImage} />}
+      {state.images.length === 0 && <CakeImageBox size={550} onClick={handleClickToAddImage} />}
       {state.images.length >= 1 && (
         <div>
           <div className="relative mb-[10px] aspect-square h-full max-h-[550px] w-full max-w-[550px] overflow-hidden">
@@ -59,7 +59,7 @@ export default function FileImageForm({ name }: Props) {
             {state.images.slice(1).map((src, index) => (
               <SelectedImage key={index} src={src.image} alt={`Selected image ${index + 1}`} size={100} isFixedSize={false} idx={index + 1} onRemove={handleClickToRemoveImage} />
             ))}
-            {state.images.length < maxImageCount && <PlusBox size={100} onClick={handleClickToAddImage} />}
+            {state.images.length < maxImageCount && <CakeImageBox size={100} onClick={handleClickToAddImage} />}
           </div>
         </div>
       )}
