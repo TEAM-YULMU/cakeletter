@@ -6,8 +6,8 @@ import Link from "next/link";
 
 export function StoreCard({ id, name, imageUrl }: StoreCardProps) {
   return (
-    <Link href={`/store/${id}`} className="relative h-[23rem] w-[16rem] overflow-hidden border-1 hover:scale-[1.02]">
-      <div>
+    <Link href={`/store/${id}`}>
+      <div className="relative mt-10.5 overflow-hidden rounded-md border-1 hover:scale-[1.02]">
         <div className="relative h-[16rem] w-full">
           <Image src={imageUrl} alt={name} fill className="object-cover" />
         </div>

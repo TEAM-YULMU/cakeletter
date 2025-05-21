@@ -12,23 +12,23 @@ const mockStores: StoreCardProps[] = [
   },
   {
     id: 2,
-    name: "건대케이크",
-    imageUrl: "https://dh-cake-letter.s3.us-east-1.amazonaws.com/store/2.png",
+    name: "우와케이크",
+    imageUrl: "https://dh-cake-letter.s3.us-east-1.amazonaws.com/store/3.jpeg",
   },
   {
     id: 3,
-    name: "건대케이크",
-    imageUrl: "https://dh-cake-letter.s3.us-east-1.amazonaws.com/store/2.png",
+    name: "르베랑",
+    imageUrl: "https://dh-cake-letter.s3.us-east-1.amazonaws.com/store/4.jpeg",
   },
   {
     id: 4,
     name: "건대케이크",
-    imageUrl: "https://dh-cake-letter.s3.us-east-1.amazonaws.com/store/2.png",
+    imageUrl: "https://dh-cake-letter.s3.us-east-1.amazonaws.com/store/5.jpeg",
   },
   {
     id: 5,
     name: "건대케이크",
-    imageUrl: "https://dh-cake-letter.s3.us-east-1.amazonaws.com/store/2.png",
+    imageUrl: "https://dh-cake-letter.s3.us-east-1.amazonaws.com/store/6.jpeg",
   },
   {
     id: 6,
@@ -81,8 +81,8 @@ export default function UserHomePage() {
   return (
     <div className="mx-auto w-[90%]">
       <Header />
-      <main className="p-6">
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-6">
+      <main className="mx-auto w-[80%]">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-x-10.5">
           {mockStores.map((store) => (
             <StoreCard key={store.id} {...store} />
           ))}
