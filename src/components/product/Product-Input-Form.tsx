@@ -48,10 +48,10 @@ export default function ProductInputForm() {
 
   return (
     <div className="mix-w-[300px] flex w-full max-w-[550px] flex-col gap-[20px]">
-      <LabelWithInput name="name" label="케이크 이름" type="text" placeholder="케이크 이름을 입력해주세요" onChange={handleChangeName} />
+      <LabelWithInput name="name" label="케이크 이름" type="text" placeholder="케이크 이름을 입력해주세요" onChange={handleChangeName} required={true} />
       <LabelWithInput name="desc" label="케이크 설명" type="text" placeholder="케이크 설명을 입력해주세요" onChange={handleChangeDesc} />
       <LabelWithInput name="price" label="케이크 가격">
-        <Input id="price" name="price" type="text" inputMode="numeric" value={price} maxLength={11} placeholder="케이크 가격을 입력해주세요" onChange={handleChangePrice} />
+        <Input id="price" name="price" type="text" inputMode="numeric" value={price} maxLength={11} placeholder="케이크 가격을 입력해주세요" onChange={handleChangePrice} required={true} />
       </LabelWithInput>
       <div className="flex flex-row justify-between">
         <Label className="text-sub-text">커스텀 옵션</Label>

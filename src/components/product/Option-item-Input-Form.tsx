@@ -45,7 +45,7 @@ export default function OptionItemInputForm({ optionIndex, index, optionFormName
           <X className="text-sub-text h-[16px] w-[16px]" />
         </button>
       </div>
-      <Input id={`${itemName}-name`} className="bg-white" name={`${itemName}-name`} placeholder="추가할 항목을 입력해주세요" onChange={handleChangeItemName} />
+      <Input id={`${itemName}-name`} className="bg-white" name={`${itemName}-name`} placeholder="추가할 항목을 입력해주세요" onChange={handleChangeItemName} required />
       <LabelWithInput label="설명" name={`${itemName}-desc`} placeholder="설명을 입력해주세요" onChange={handleChangeItemDesc} />
     </div>
   );
