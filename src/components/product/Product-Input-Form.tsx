@@ -13,17 +13,18 @@ type Props = {
   isSubmitting: boolean;
 };
 
+const parsePrice = (value: string) => {
+  const numeric = value.replace(/[^\d]/g, ""); // 숫자만 남김
+  if (!numeric) return "";
+  const number = parseInt(numeric, 10);
+  if (isNaN(number)) return "";
+  return number;
+};
+
 export default function ProductInputForm({ isSubmitting }: Props) {
   const { state, dispatch } = useProductContext();
-  const [price, setPrice] = useState("");
-
-  const parsePrice = (value: string) => {
-    const numeric = value.replace(/[^\d]/g, ""); // 숫자만 남김
-    if (!numeric) return "";
-    const number = parseInt(numeric, 10);
-    if (isNaN(number)) return "";
-    return number;
-  };
+  const initialPrice = state.price === 0 ? "" : parsePrice(state.price.toString());
+  const [price, setPrice] = useState(initialPrice);
 
   const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: "UPDATE_FIELD", key: "name", value: event.target.value });
@@ -52,8 +53,8 @@ export default function ProductInputForm({ isSubmitting }: Props) {
 
   return (
     <div className="mix-w-[300px] flex w-full max-w-[550px] flex-col gap-[20px]">
-      <LabelWithInput name="name" label="케이크 이름" type="text" placeholder="케이크 이름을 입력해주세요" onChange={handleChangeName} required={true} />
-      <LabelWithInput name="desc" label="케이크 설명" type="text" placeholder="케이크 설명을 입력해주세요" onChange={handleChangeDesc} />
+      <LabelWithInput name="name" label="케이크 이름" type="text" value={state.name} placeholder="케이크 이름을 입력해주세요" onChange={handleChangeName} required={true} />
+      <LabelWithInput name="desc" label="케이크 설명" type="text" value={state.description} placeholder="케이크 설명을 입력해주세요" onChange={handleChangeDesc} />
       <LabelWithInput name="price" label="케이크 가격">
         <Input id="price" name="price" type="text" inputMode="numeric" value={price} maxLength={11} placeholder="케이크 가격을 입력해주세요" onChange={handleChangePrice} required={true} />
       </LabelWithInput>
