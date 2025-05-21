@@ -37,9 +37,15 @@ export default function StoreList({ initialStores }: Props) {
         }}
       />
 
-      <div className="grid grid-cols-[repeat(auto-fit,240px)] justify-center gap-x-10.5">
-        {stores.length > 0 ? stores.map((store) => <StoreCard key={store.id} {...store} />) : <p className="text-sub-text mt-10.5 text-center">선택한 지역에 등록된 가게가 없습니다.</p>}
-      </div>
+      {stores.length > 0 ? (
+        <div className="grid grid-cols-[repeat(auto-fit,240px)] justify-center gap-x-10.5">
+          {stores.map((store) => (
+            <StoreCard key={store.id} {...store} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-sub-text mt-10.5 text-center">선택한 지역에 등록된 가게가 없습니다.</p>
+      )}
     </div>
   );
 }
