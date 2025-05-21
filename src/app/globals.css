@@ -7,6 +7,7 @@
 
 /* ========== Custom Font Utilities ========== */
 @layer components {
+
   /* Font sizes*/
   .f48 { font-size: 3rem; line-height: 1.4; }       /* 48px */
   .f36 { font-size: 2.25rem; line-height: 1.4; }     /* 36px */
@@ -20,38 +21,83 @@
   .f10 { font-size: 0.625rem; line-height: 1.5; }    /* 10px */
 
   /* Font weights */
-  .text-regular  { font-weight: 400; }
-  .text-medium   { font-weight: 500; }
-  .text-semibold { font-weight: 600; }
-  .text-bold     { font-weight: 700; }
+  .text-regular {
+    font-weight: 400;
+  }
+
+  .text-medium {
+    font-weight: 500;
+  }
+
+  .text-semibold {
+    font-weight: 600;
+  }
+
+  .text-bold {
+    font-weight: 700;
+  }
 
   /* Font family */
-  .font-sans     { font-family: 'Pretendard', sans-serif; }
+  .font-sans {
+    font-family: 'Pretendard', sans-serif;
+  }
 
   /* Letter spacing */
-  .tracking-tight { letter-spacing: -0.015em; }
+  .tracking-tight {
+    letter-spacing: -0.015em;
+  }
 }
 
 /* ========== Custom Colors ========== */
 @layer utilities {
+
   /* Primary colors */
-  .color-primary-100 { background-color: var(--color-primary-100); }
-  .color-primary-200 { background-color: var(--color-primary-200); }
-  .color-primary-300 { background-color: var(--color-primary-300); }
-  .color-primary-400 { background-color: var(--color-primary-400); }
+  .color-primary-100 {
+    background-color: var(--color-primary-100);
+  }
+
+  .color-primary-200 {
+    background-color: var(--color-primary-200);
+  }
+
+  .color-primary-300 {
+    background-color: var(--color-primary-300);
+  }
+
+  .color-primary-400 {
+    background-color: var(--color-primary-400);
+  }
 
   /* Secondary colors */
-  .color-secondary-100 { background-color: var(--color-secondary-100); }
-  .color-secondary-300 { background-color: var(--color-secondary-300); }
-  .color-secondary-400 { background-color: var(--color-secondary-400); }
-  .hover\:color-secondary-400:hover { background-color: var(--color-secondary-400); }
+  .color-secondary-100 {
+    background-color: var(--color-secondary-100);
+  }
+
+  .color-secondary-300 {
+    background-color: var(--color-secondary-300);
+  }
+
+  .color-secondary-400 {
+    background-color: var(--color-secondary-400);
+  }
+
+  .hover\:color-secondary-400:hover {
+    background-color: var(--color-secondary-400);
+  }
 
   /* Text colors */
-  .color-primary-text { color: var(--color-primary-text); }
-  .color-subtext { color: var(--color-sub-text); }
+  .color-primary-text {
+    color: var(--color-primary-text);
+  }
+
+  .color-subtext {
+    color: var(--color-sub-text);
+  }
 
   /* Border color */
-  .color-line { border-color: var(--color-line); }
+  .color-line {
+    border-color: var(--color-line);
+  }
 }
 
 /* ========== Theme Variables (shadcn, sidebar 등) ========== */
@@ -130,6 +176,7 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --font-sans: 'Pretendard', sans-serif;
+  --mobile: '550px'
 }
 
 /* 다크모드 변수 오버라이드 */
@@ -197,5 +244,19 @@
     font-family: 'Pretendard', sans-serif;
     @apply bg-background text-foreground;
     height: 100vh;
+  }
+}
+
+@media (min-width: 700px) {
+  .product-form {
+    flex-direction: row;
+    gap: 60px;
+  }
+}
+
+@media (max-width: 699px) {
+  .product-form {
+    flex-direction: column;
+    gap: 24px;
   }
 }
