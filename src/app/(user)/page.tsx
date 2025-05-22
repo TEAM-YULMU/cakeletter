@@ -1,4 +1,3 @@
-import { Header } from "@/components/layout/Header";
 import { prisma } from "@/lib/prisma";
 import StoreList from "@/components/store/StoreList";
 
@@ -13,10 +12,5 @@ export default async function UserHomePage() {
     },
   });
 
-  return (
-    <div className="mx-auto w-[90%]">
-      <Header />
-      <StoreList initialStores={initialStores} />
-    </div>
-  );
+  return <StoreList initialStores={initialStores} />;
 }
