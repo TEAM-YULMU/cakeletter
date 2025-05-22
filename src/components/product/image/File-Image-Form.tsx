@@ -53,11 +53,11 @@ export default function FileImageForm({ name }: Props) {
       {state.images.length >= 1 && (
         <div>
           <div className="relative mb-[10px] aspect-square h-full max-h-[550px] w-full max-w-[550px] overflow-hidden">
-            <SelectedImage key={crypto.randomUUID()} src={state.images[0].image} alt={"thumbnail"} size={550} idx={0} onRemove={handleClickToRemoveImage} />
+            <SelectedImage key={state.images[0].id} src={state.images[0].image} alt={"thumbnail"} size={550} idx={0} onRemove={handleClickToRemoveImage} />
           </div>
           <div className="flex flex-wrap gap-[10px]">
             {state.images.slice(1).map((src, index) => (
-              <SelectedImage key={crypto.randomUUID()} src={src.image} alt={`Selected image ${index + 1}`} size={100} isFixedSize={false} idx={index + 1} onRemove={handleClickToRemoveImage} />
+              <SelectedImage key={src.id} src={src.image} alt={`Selected image ${index + 1}`} size={100} isFixedSize={false} idx={index + 1} onRemove={handleClickToRemoveImage} />
             ))}
             {state.images.length < maxImageCount && <CakeImageBox size={100} onClick={handleClickToAddImage} />}
           </div>
