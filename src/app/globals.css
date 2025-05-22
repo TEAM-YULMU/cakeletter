@@ -9,60 +9,16 @@
 @layer components {
 
   /* Font sizes*/
-  .f48 {
-    font-size: 3rem;
-    line-height: 1.4;
-  }
-
-  /* 48px */
-  .f36 {
-    font-size: 2.25rem;
-    line-height: 1.4;
-  }
-
-  /* 36px */
-  .f28 {
-    font-size: 1.75rem;
-    line-height: 1.4;
-  }
-
-  /* 28px */
-  .f24 {
-    font-size: 1.5rem;
-    line-height: 1.5;
-  }
-
-  /* 24px */
-  .f20 {
-    font-size: 1.25rem;
-    line-height: 1.5;
-  }
-
-  /* 20px */
-  .f18 {
-    font-size: 1.125rem;
-    line-height: 1.5;
-  }
-
-  /* 18px */
-  .f16 {
-    font-size: 1rem;
-    line-height: 1.5;
-  }
-
-  /* 16px */
-  .f14 {
-    font-size: 0.875rem;
-    line-height: 1.5;
-  }
-
-  /* 14px */
-  .f12 {
-    font-size: 0.75rem;
-    line-height: 1.5;
-  }
-
-  /* 12px */
+  .f48 { font-size: 3rem; line-height: 1.4; }       /* 48px */
+  .f36 { font-size: 2.25rem; line-height: 1.4; }     /* 36px */
+  .f28 { font-size: 1.75rem; line-height: 1.4; }     /* 28px */
+  .f24 { font-size: 1.5rem; line-height: 1.5; }      /* 24px */
+  .f20 { font-size: 1.25rem; line-height: 1.5; }     /* 20px */
+  .f18 { font-size: 1.125rem; line-height: 1.5; }    /* 18px */
+  .f16 { font-size: 1rem; line-height: 1.5; }        /* 16px */
+  .f14 { font-size: 0.875rem; line-height: 1.5; }    /* 14px */
+  .f12 { font-size: 0.75rem; line-height: 1.5; }     /* 12px */
+  .f10 { font-size: 0.625rem; line-height: 1.5; }    /* 10px */
 
   /* Font weights */
   .text-regular {

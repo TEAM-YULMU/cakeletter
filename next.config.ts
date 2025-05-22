@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
+    domains: ["dh-cake-letter.s3.us-east-1.amazonaws.com"],
   },
 };
 
