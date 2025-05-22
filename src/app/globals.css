@@ -10,9 +10,11 @@
 
   /* Font sizes*/
   .f48 { font-size: 3rem; line-height: 1.4; }       /* 48px */
+  .f40 { font-size: 2.5rem; line-height: 1.4; }     /* 40px */
   .f36 { font-size: 2.25rem; line-height: 1.4; }     /* 36px */
   .f28 { font-size: 1.75rem; line-height: 1.4; }     /* 28px */
   .f24 { font-size: 1.5rem; line-height: 1.5; }      /* 24px */
+  .f22 { font-size: 1.375rem; line-height: 1.5; }    /* 22px */
   .f20 { font-size: 1.25rem; line-height: 1.5; }     /* 20px */
   .f18 { font-size: 1.125rem; line-height: 1.5; }    /* 18px */
   .f16 { font-size: 1rem; line-height: 1.5; }        /* 16px */
