@@ -49,8 +49,7 @@ const ProductInputForm = () => {
       });
 
       if (response.ok) {
-        const result = await response.json();
-        console.log(result);
+        toast.success("상품 등록에 성공했습니다.");
         router.push("/owner");
       } else if (response.status === 401) {
         const result = await response.json();
@@ -89,7 +88,7 @@ const ProductInputForm = () => {
       if (response.ok) {
         // 요청 성공
         const result = await response.json();
-        console.log(result);
+        toast.success("상품 수정에 성공했습니다.");
         router.push("/owner");
       } else if (response.status === 401) {
         const result = await response.json();
