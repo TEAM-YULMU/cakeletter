@@ -3,7 +3,9 @@
 import { OptionCategory, OptionItem, Product } from "@/types/product";
 import { createContext, PropsWithChildren, useContext, useReducer } from "react";
 
-type State = Product;
+type State = Product & {
+  removedUrlImages: string[];
+};
 
 type Action =
   | { type: "UPDATE_FIELD"; key: keyof Product; value: string | number }
@@ -24,6 +26,7 @@ const initialState: State = {
   price: 0,
   images: [],
   options: [],
+  removedUrlImages: [],
 };
 
 function reducer(state: State, action: Action): State {
@@ -38,11 +41,16 @@ function reducer(state: State, action: Action): State {
         images: [...state.images, ...action.images.map((file) => ({ id: Date.now(), productId: state.id, image: file }))],
       };
 
-    case "REMOVE_IMAGE":
+    case "REMOVE_IMAGE": {
+      if (typeof state.images[action.index].image === "string") {
+        state.removedUrlImages.push(state.images[action.index].image as string);
+      }
+
       return {
         ...state,
         images: state.images.filter((img, index) => index !== action.index),
       };
+    }
 
     case "ADD_OPTION_GROUP":
       return {

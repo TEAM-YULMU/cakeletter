@@ -1,4 +1,4 @@
-import NewProductForm from "@/components/product/New-Product-Form";
+import ProductInputForm from "@/components/product/Product-Input-Form";
 import { ProductProvider } from "@/contexts/ProductContext";
 import { getProduct } from "@/lib/actions/product";
 
@@ -17,8 +17,8 @@ export default async function ProductEditPage({ params }: { params: Promise<Prop
   return (
     <div className="flex w-[90%] flex-col pb-[40px]">
       <div className="f28 py-[42px]">상품 수정</div>
-      <ProductProvider propsState={product}>
-        <NewProductForm />
+      <ProductProvider propsState={{ ...product, removedUrlImages: [] }}>
+        <ProductInputForm />
       </ProductProvider>
     </div>
   );

@@ -1,79 +1,118 @@
 "use client";
 
-import { useState } from "react";
-import LabelWithInput from "../Label-With-Input";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { CirclePlus } from "lucide-react";
-import OptionInputForm from "./Option-Input-Form";
-import { Button } from "../ui/button";
 import { useProductContext } from "@/contexts/ProductContext";
+import FileImageForm from "./image/File-Image-Form";
+import ProductInfoInputForm from "./Product-Info-Input-Form";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
-type Props = {
-  isSubmitting: boolean;
-};
+const ProductInputForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+  const { state } = useProductContext();
 
-const parsePrice = (value: string) => {
-  const numeric = value.replace(/[^\d]/g, ""); // 숫자만 남김
-  if (!numeric) return "";
-  const number = parseInt(numeric, 10);
-  if (isNaN(number)) return "";
-  return number;
-};
+  const setFormData = () => {
+    const formData = new FormData();
+    formData.append("name", state.name);
+    formData.append("description", state.description);
+    formData.append("price", state.price.toString());
+    formData.append("options", JSON.stringify(state.options));
 
-export default function ProductInputForm({ isSubmitting }: Props) {
-  const { state, dispatch } = useProductContext();
-  const initialPrice = state.price === 0 ? "" : parsePrice(state.price.toString());
-  const [price, setPrice] = useState(initialPrice);
+    state.images.forEach((image) => {
+      formData.append("images", image.image);
+    });
 
-  const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: "UPDATE_FIELD", key: "name", value: event.target.value });
+    state.removedUrlImages?.forEach((url) => {
+      formData.append("removedUrlImages", url);
+    });
+
+    return formData;
   };
 
-  const handleChangeDesc = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: "UPDATE_FIELD", key: "description", value: event.target.value });
+  const handleAddProduct = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (state.images.length === 0) {
+      toast.error("이미지를 추가해주세요.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    const formData = setFormData();
+
+    try {
+      const response = await fetch("/api/stores/0/products", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result);
+        router.push("/owner");
+      } else if (response.status === 401) {
+        const result = await response.json();
+        toast.error(result.message);
+        router.push("/login");
+      } else {
+        toast.error(await response.text());
+      }
+
+      setIsSubmitting(false);
+    } catch (error) {
+      toast.error("상품 등록에 실패했습니다.");
+      console.log(error);
+      setIsSubmitting(false);
+    }
   };
 
-  const handleChangePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const parsedPrice = parsePrice(event.target.value);
+  const handleEditProduct = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    // 3자리마다 , 추가
-    setPrice(parsedPrice.toLocaleString());
+    if (state.images.length === 0) {
+      toast.error("이미지를 추가해주세요.");
+      return;
+    }
 
-    dispatch({ type: "UPDATE_FIELD", key: "price", value: parsedPrice });
-  };
+    setIsSubmitting(true);
 
-  const handleAddOption = () => {
-    dispatch({ type: "ADD_OPTION_GROUP" });
-  };
+    const formData = setFormData();
 
-  const handleRemoveOption = (optionIdx: number) => {
-    dispatch({ type: "REMOVE_OPTION_GROUP", index: optionIdx });
+    try {
+      const response = await fetch(`/api/stores/${state.storeId}/products/${state.id}`, {
+        method: "PUT",
+        body: formData,
+      });
+
+      if (response.ok) {
+        // 요청 성공
+        const result = await response.json();
+        console.log(result);
+        router.push("/owner");
+      } else if (response.status === 401) {
+        const result = await response.json();
+        toast.error(result.message);
+        router.push("/login");
+      } else {
+        toast.error(await response.text());
+      }
+
+      setIsSubmitting(false);
+    } catch (error) {
+      toast.error("상품 수정에 실패했습니다.");
+      console.log(error);
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="mix-w-[300px] flex w-full max-w-[550px] flex-col gap-[20px]">
-      <LabelWithInput name="name" label="케이크 이름" type="text" value={state.name} placeholder="케이크 이름을 입력해주세요" onChange={handleChangeName} required={true} />
-      <LabelWithInput name="desc" label="케이크 설명" type="text" value={state.description} placeholder="케이크 설명을 입력해주세요" onChange={handleChangeDesc} />
-      <LabelWithInput name="price" label="케이크 가격">
-        <Input id="price" name="price" type="text" inputMode="numeric" value={price} maxLength={11} placeholder="케이크 가격을 입력해주세요" onChange={handleChangePrice} required={true} />
-      </LabelWithInput>
-      <div className="flex flex-row justify-between">
-        <Label className="text-sub-text">커스텀 옵션</Label>
-        <button className="cursor-pointer" type="button" onClick={handleAddOption}>
-          <CirclePlus className="text-sub-text h-[22px] w-[22px]" />
-        </button>
-      </div>
-
-      {state.options.map((option, index) => (
-        <div key={option.id}>
-          <OptionInputForm index={index} onRemoveOption={handleRemoveOption} />
-        </div>
-      ))}
-
-      <Button className="bg-secondary-300 hover:bg-secondary-400 flex h-[48px] w-full" type="submit" disabled={isSubmitting}>
-        완료
-      </Button>
-    </div>
+    <form onSubmit={state.id === 0 ? handleAddProduct : handleEditProduct} className="product-form flex justify-center">
+      <FileImageForm name="image" />
+      <ProductInfoInputForm isSubmitting={isSubmitting} />
+    </form>
   );
-}
+};
+
+export default ProductInputForm;
