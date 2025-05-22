@@ -8,9 +8,11 @@ import { CirclePlus } from "lucide-react";
 import OptionInputForm from "./Option-Input-Form";
 import { Button } from "../ui/button";
 import { useProductContext } from "@/contexts/ProductContext";
+import { DialogButton } from "../Dialog-Button";
 
 type Props = {
   isSubmitting: boolean;
+  onDelete?: () => void;
 };
 
 const parsePrice = (value: string) => {
@@ -21,7 +23,7 @@ const parsePrice = (value: string) => {
   return number;
 };
 
-export default function ProductInfoInputForm({ isSubmitting }: Props) {
+export default function ProductInfoInputForm({ isSubmitting, onDelete }: Props) {
   const { state, dispatch } = useProductContext();
   const initialPrice = state.price === 0 ? "" : parsePrice(state.price.toString());
   const [price, setPrice] = useState(initialPrice);
@@ -79,9 +81,15 @@ export default function ProductInfoInputForm({ isSubmitting }: Props) {
       ) : (
         // 상품 수정 버튼
         <div className="flex flex-row gap-[15px]">
-          <Button className="bg-primary-300 hover:bg-primary-400 flex h-[48px] flex-2" type="button">
-            삭제
-          </Button>
+          <DialogButton
+            className="bg-primary-300 hover:bg-primary-400 flex h-[48px] flex-2"
+            buttonLabel="삭제"
+            title="정말 삭제하시겠습니까?"
+            description="삭제한 상품은 복구할 수 없습니다."
+            onAction={onDelete!}
+            actionLabel="삭제"
+            actionClassName="bg-primary-300 hover:bg-primary-400"
+          />
           <Button className="bg-secondary-300 hover:bg-secondary-400 flex h-[48px] flex-3" type="submit" disabled={isSubmitting}>
             완료
           </Button>

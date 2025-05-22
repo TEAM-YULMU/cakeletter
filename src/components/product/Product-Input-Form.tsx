@@ -107,10 +107,38 @@ const ProductInputForm = () => {
     }
   };
 
+  const handleDeleteProduct = async () => {
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(`/api/stores/${state.storeId}/products/${state.id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        // 요청 성공
+        toast.success("상품 삭제에 성공했습니다.");
+        router.push("/owner");
+      } else if (response.status === 401) {
+        const result = await response.json();
+        toast.error(result.message);
+        router.push("/login");
+      } else {
+        toast.error(await response.text());
+      }
+
+      setIsSubmitting(false);
+    } catch (error) {
+      toast.error("상품 삭제에 실패했습니다.");
+      console.log(error);
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <form onSubmit={state.id === 0 ? handleAddProduct : handleEditProduct} className="product-form flex justify-center">
       <FileImageForm name="image" />
-      <ProductInfoInputForm isSubmitting={isSubmitting} />
+      <ProductInfoInputForm isSubmitting={isSubmitting} onDelete={handleDeleteProduct} />
     </form>
   );
 };

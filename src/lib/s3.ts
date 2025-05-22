@@ -60,7 +60,7 @@ export async function uploadImageToS3({ path, image }: S3ImageUploadReq) {
 }
 
 export async function deleteImageFromS3({ url }: S3ImageDeleteReq) {
-  const pathKey = url.split(S3_URL_PREFIX)[1];
+  const pathKey = url.split(S3_URL_PREFIX)[0];
 
   try {
     await s3.deleteObject({

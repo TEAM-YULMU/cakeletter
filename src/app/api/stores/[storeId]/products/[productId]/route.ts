@@ -105,3 +105,45 @@ export async function PUT(req: NextRequest, { params }: { params: { storeId: str
     return NextResponse.json({ message: "상품 수정 실패.", error: String(error) }, { status: 500 });
   }
 }
+
+export async function DELETE(req: NextRequest, { params }: { params: { storeId: string; productId: string } }) {
+  const session = await verifySession();
+
+  if (!session) {
+    return NextResponse.json({ message: "로그인을 진행해주세요." }, { status: 401 });
+  }
+
+  const store = await prisma.store.findUnique({
+    where: { memberId: parseInt(session.id) },
+  });
+
+  const storeId = parseInt(params.storeId);
+  const productId = parseInt(params.productId);
+
+  if (!store) {
+    return NextResponse.json({ message: "사용자 형식이 맞지 않습니다." }, { status: 400 });
+  }
+  if (isNaN(storeId) || isNaN(productId)) {
+    return NextResponse.json({ message: "유효한 요청이 아닙니다." }, { status: 400 });
+  }
+
+  try {
+    await prisma.$transaction(async (tx) => {
+      const images = await tx.image.findMany({
+        where: { productId: productId },
+      });
+
+      // s3 이미지 삭제
+      await Promise.all(images.map((image) => deleteImageFromS3({ url: image.url })));
+
+      // 상품 DB 삭제
+      await tx.product.delete({
+        where: { id: productId },
+      });
+    });
+
+    return NextResponse.json({ message: "상품 삭제 성공." }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ message: "상품 삭제 실패.", error: String(error) }, { status: 500 });
+  }
+}
