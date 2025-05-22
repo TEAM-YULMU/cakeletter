@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default function OptionItemInputForm({ optionIndex, index, optionFormName, onRemoveItem }: Props) {
-  const { dispatch } = useProductContext();
+  const { state, dispatch } = useProductContext();
   const itemName = `${optionFormName}-${index}`;
 
   const handleChangeItemName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,8 +45,16 @@ export default function OptionItemInputForm({ optionIndex, index, optionFormName
           <X className="text-sub-text h-[16px] w-[16px]" />
         </button>
       </div>
-      <Input id={`${itemName}-name`} className="bg-white" name={`${itemName}-name`} placeholder="추가할 항목을 입력해주세요" onChange={handleChangeItemName} required />
-      <LabelWithInput label="설명" name={`${itemName}-desc`} placeholder="설명을 입력해주세요" onChange={handleChangeItemDesc} />
+      <Input
+        id={`${itemName}-name`}
+        value={state.options[optionIndex].items[index].name}
+        className="bg-white"
+        name={`${itemName}-name`}
+        placeholder="추가할 항목을 입력해주세요"
+        onChange={handleChangeItemName}
+        required
+      />
+      <LabelWithInput label="설명" name={`${itemName}-desc`} value={state.options[optionIndex].items[index].description} placeholder="설명을 입력해주세요" onChange={handleChangeItemDesc} />
     </div>
   );
 }

@@ -7,6 +7,10 @@ import { OptionCategory } from "@/types/product";
 export async function POST(req: NextRequest) {
   const session = await verifySession();
 
+  if (!session) {
+    return NextResponse.json({ message: "로그인을 진행해주세요." }, { status: 401 });
+  }
+
   const store = await prisma.store.findUnique({
     where: { memberId: parseInt(session.id) },
   });
@@ -32,47 +36,51 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // 상품 DB 저장
-    const product = await prisma.product.create({
-      data: {
-        storeId: store.id,
-        name,
-        description,
-        price,
-        optionCategories: {
-          create: options.map((option) => ({
-            name: option.name,
-            required: option.required,
-            multiple: option.multiple,
-            optionItems: {
-              create: option.items.map((item) => ({
-                name: item.name,
-                description: item.description,
-              })),
-            },
-          })),
-        },
-      },
-    });
-
-    // s3 업로드
-    const urls = await Promise.all(
-      files.map((file) =>
-        uploadImageToS3({
-          path: `store/${store.id}/product/${product.id}`,
-          image: file,
-        })
-      )
-    );
-
-    // 이미지 DB 저장
-    urls.forEach(async (url) => {
-      await prisma.image.create({
+    const product = await prisma.$transaction(async (tx) => {
+      // 상품 DB 저장
+      const product = await tx.product.create({
         data: {
-          productId: product.id,
-          url: url,
+          storeId: store.id,
+          name,
+          description,
+          price,
+          optionCategories: {
+            create: options.map((option) => ({
+              name: option.name,
+              required: option.required,
+              multiple: option.multiple,
+              optionItems: {
+                create: option.items.map((item) => ({
+                  name: item.name,
+                  description: item.description,
+                })),
+              },
+            })),
+          },
         },
       });
+
+      // s3 업로드
+      const urls = await Promise.all(
+        files.map((file) =>
+          uploadImageToS3({
+            path: `store/${store.id}/product/${product.id}`,
+            image: file,
+          })
+        )
+      );
+
+      // 이미지 DB 저장
+      for (const url of urls) {
+        await tx.image.create({
+          data: {
+            productId: product.id,
+            url: url,
+          },
+        });
+      }
+
+      return product;
     });
 
     return NextResponse.json({ message: "상품 등록 성공.", productId: product.id }, { status: 200 });
