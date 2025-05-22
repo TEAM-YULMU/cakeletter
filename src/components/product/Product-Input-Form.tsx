@@ -87,7 +87,6 @@ const ProductInputForm = () => {
 
       if (response.ok) {
         // 요청 성공
-        const result = await response.json();
         toast.success("상품 수정에 성공했습니다.");
         router.push("/owner");
       } else if (response.status === 401) {

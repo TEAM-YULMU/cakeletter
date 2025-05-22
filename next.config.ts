@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: `${process.env.S3_BUCKET}.s3.amazonaws.com`,
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };
