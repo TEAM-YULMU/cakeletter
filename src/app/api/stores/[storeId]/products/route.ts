@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { uploadImageToS3 } from "@/lib/s3";
 import { prisma } from "@/lib/prisma";
 import { verifySession } from "@/lib/actions/sessions";
-import { OptionCategory } from "@/types/product";
+import { OptionCategory, ProductPreview } from "@/types/product";
 
 export async function POST(req: NextRequest) {
   const session = await verifySession();
@@ -83,8 +83,47 @@ export async function POST(req: NextRequest) {
       return product;
     });
 
-    return NextResponse.json({ message: "상품 등록 성공.", productId: product.id }, { status: 200 });
-  } catch (error) {
-    return NextResponse.json({ message: "상품 등록 실패.", error: String(error) }, { status: 500 });
+    return NextResponse.json({ message: "상품 등록 성공", productId: product.id }, { status: 200 });
+  } catch {
+    return NextResponse.json({ message: "상품 등록 실패" }, { status: 500 });
+  }
+}
+
+export async function GET(req: NextRequest, context: { params: { storeId: string } }) {
+  try {
+    const storeId = parseInt(context.params.storeId, 10);
+
+    if (isNaN(storeId)) {
+      return NextResponse.json({ message: "유효하지 않은 storeId입니다." }, { status: 400 });
+    }
+
+    const store = await prisma.store.findUnique({ where: { id: storeId } });
+
+    if (!store) {
+      return NextResponse.json({ message: "해당 가게를 찾을 수 없습니다." }, { status: 404 });
+    }
+
+    const products = await prisma.product.findMany({
+      where: { storeId },
+      select: {
+        id: true,
+        name: true,
+        Image: {
+          select: { url: true },
+          take: 1,
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    const response: ProductPreview[] = products.map((product) => ({
+      id: product.id,
+      name: product.name,
+      imageUrl: product.Image[0]?.url ?? null,
+    }));
+
+    return NextResponse.json(response);
+  } catch {
+    return NextResponse.json({ status: 500 });
   }
 }
