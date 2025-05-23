@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import { Header } from "@/components/layout/Header";
 import StoreImage from "@/components/store/StoreImage";
 import StoreInfo from "@/components/store/StoreInfo";
 import StoreDescription from "@/components/store/StoreDescription";
@@ -28,17 +27,14 @@ export default async function StoreDetailPage({ params }: Props) {
   if (!store) notFound();
 
   return (
-    <div className="mx-auto w-[90%]">
-      <Header />
-      <div className="mt-10.5 flex max-w-[1920px] flex-col gap-10.5 md:flex-row">
-        <StoreImage imageUrl={store.imageUrl} />
-        <div className="flex flex-1 flex-col justify-between">
-          <div className="flex flex-col gap-5">
-            <StoreInfo name={store.name} openDays={store.openDays} address={store.address} />
-          </div>
-          <StoreDescription content={store.content} />
-          <StoreActionButtons storeId={storeId} />
+    <div className="mt-10.5 flex max-w-[1920px] flex-col gap-10.5 md:flex-row">
+      <StoreImage imageUrl={store.imageUrl} />
+      <div className="flex flex-1 flex-col justify-between">
+        <div className="flex flex-col gap-5">
+          <StoreInfo name={store.name} openDays={store.openDays} address={store.address} />
         </div>
+        <StoreDescription content={store.content} />
+        <StoreActionButtons storeId={storeId} />
       </div>
     </div>
   );
