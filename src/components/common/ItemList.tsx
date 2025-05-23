@@ -17,7 +17,7 @@ export default function ItemCardList({ items }: Props) {
           ))}
         </div>
       ) : (
-        <p className="text-sub-text mt-10.5 text-center">조회된 항목이 없습니다.</p>
+        <p className="text-sub-text mt-10.5 text-center">등록된 항목이 없습니다.</p>
       )}
     </div>
   );

@@ -38,14 +38,15 @@ export default function StoreList({ initialStores }: Props) {
   }));
 
   return (
-    <div className="mx-auto mt-10.5 w-[80%]">
-      <RegionSelectBox
-        onChange={(province, district) => {
-          setSelectedProvince(province);
-          setSelectedDistrict(district);
-        }}
-      />
-
+    <div className="mx-auto mt-10.5 w-full">
+      <div className="ml-15.5">
+        <RegionSelectBox
+          onChange={(province, district) => {
+            setSelectedProvince(province);
+            setSelectedDistrict(district);
+          }}
+        />
+      </div>
       <ItemCardList items={cards} />
     </div>
   );

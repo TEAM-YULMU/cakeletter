@@ -14,7 +14,7 @@ export function ItemCard({ id, title, imageUrl, href, footerText = "See More >",
 
         <div className={`${bgColorClass} flex h-[7rem] flex-col justify-between p-4`}>
           <h3 className="f20 text-medium text-primary-text">{title}</h3>
-          <p className="f10 mt-2 text-black">{footerText}</p>
+          <p className="f10 mt-2 text-black hover:underline">{footerText}</p>
         </div>
       </Link>
     </div>
