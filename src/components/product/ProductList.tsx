@@ -1,8 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import ItemCardList from "@/components/common/ItemList";
 import type { ProductPreview } from "@/types/product";
+import BackTitle from "@/components/common/BackTitle";
 
 type Props = {
   storeId: number;
@@ -11,8 +11,6 @@ type Props = {
 };
 
 export default function ProductListPage({ storeId, storeName, products }: Props) {
-  const router = useRouter();
-
   const cards = products.map((product) => ({
     id: product.id,
     title: product.name,
@@ -24,11 +22,7 @@ export default function ProductListPage({ storeId, storeName, products }: Props)
 
   return (
     <div className="mx-auto mt-10.5 w-full">
-      <div className="mx-10.5 flex items-center gap-2">
-        <button onClick={() => router.back()} className="f28 text-medium text-primary-text hover:text-sub-text ml-10.5 leading-none">
-          &lt; {storeName}
-        </button>
-      </div>
+      <BackTitle title={storeName} />
       <ItemCardList items={cards} />
     </div>
   );
