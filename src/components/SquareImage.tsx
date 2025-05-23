@@ -6,9 +6,10 @@ type Props = {
   alt: string;
   size: number;
   isFixedSize?: boolean;
+  onClick?: () => void;
 };
 
-export default function SquareImage({ src, alt, size, isFixedSize }: Props) {
+export default function SquareImage({ src, alt, size, isFixedSize, onClick }: Props) {
   const imageUrl = typeof src === "string" ? src : useImagePreview(src);
 
   if (!imageUrl) {
@@ -27,7 +28,8 @@ export default function SquareImage({ src, alt, size, isFixedSize }: Props) {
 
   return (
     <div
-      className="relative aspect-square overflow-hidden"
+      onClick={onClick}
+      className={`relative aspect-square overflow-hidden ${onClick ? "cursor-pointer" : ""}`}
       style={{
         maxWidth: `${size}px`,
         maxHeight: `${size}px`,
