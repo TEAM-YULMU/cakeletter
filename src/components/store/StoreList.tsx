@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import RegionSelectBox from "./RegionSelectBox";
 import { StoreCard } from "./StoreCard";
 import type { StoreCardProps } from "@/types/store";
+import { getFilteredStores } from "@/lib/api/store";
 
 type Props = {
   initialStores: StoreCardProps[];
@@ -16,13 +17,12 @@ export default function StoreList({ initialStores }: Props) {
 
   useEffect(() => {
     const fetchStores = async () => {
-      const params = new URLSearchParams();
-      if (selectedProvince) params.append("city_province", selectedProvince);
-      if (selectedDistrict) params.append("district", selectedDistrict);
-
-      const res = await fetch(`/api/stores?${params.toString()}`);
-      const data = await res.json();
-      setStores(data);
+      try {
+        const data = await getFilteredStores(selectedProvince, selectedDistrict);
+        setStores(data);
+      } catch {
+        console.error("가게 불러오기 실패");
+      }
     };
 
     fetchStores();
