@@ -40,7 +40,7 @@ type S3ImageDeleteReq = {
 
 export async function uploadImageToS3({ path, image }: S3ImageUploadReq) {
   const extension = image.name.split(".").pop();
-  const fileName = `image_${new Date().getTime()}.${extension}`;
+  const fileName = `image_${Date.now()}_${Math.floor(Math.random() * 100000)}.${extension}`;
   const pathKey = `${path}/${fileName}`;
   const bufferedImage = await image.arrayBuffer();
 
