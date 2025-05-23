@@ -20,6 +20,9 @@ model Member {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   store Store?
+
+  rooms Room[]
+  chats Chat[]
 }
 
 enum Gender {
@@ -30,6 +33,38 @@ enum Gender {
 enum Role {
   USER
   OWNER
+}
+
+model Room {
+  id              Int       @id @default(autoincrement())
+  name            String    @unique
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  // null: 둘 다 읽기 가능, 특정 유저의 아이디: 해당 유저만 읽기 불가능 (채팅방 나가기 기능을 위함)
+  chatInvisibleTo Int?      @map("chat_invisible_to")
+  lastChat        String?   @map("last_chat")
+  timeOfLastChat  DateTime? @map("time_of_last_chat")
+
+  // member와 room N:M
+  members Member[]
+  // room과 chat 1:N
+  chats   Chat[]
+}
+
+model Chat {
+  id        Int      @id @default(autoincrement())
+  chat      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  member   Member? @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  memberId Int?    @map("member_id")
+
+  room   Room? @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  roomId Int?  @map("room_id")
+
+  @@index([memberId])
+  @@index([roomId])
 }
 
 model Store {
