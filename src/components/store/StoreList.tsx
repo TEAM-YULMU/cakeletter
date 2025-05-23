@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import RegionSelectBox from "./RegionSelectBox";
-import { StoreCard } from "./StoreCard";
-import type { StoreCardProps } from "@/types/store";
+import RegionSelectBox from "@/components/store/RegionSelectBox";
+import ItemCardList from "@/components/common/ItemList";
+import { StoreCardProps } from "@/types/store";
 import { getFilteredStores } from "@/lib/api/store";
 
 type Props = {
@@ -28,6 +28,15 @@ export default function StoreList({ initialStores }: Props) {
     fetchStores();
   }, [selectedProvince, selectedDistrict]);
 
+  const cards = stores.map((store) => ({
+    id: store.id,
+    title: store.name,
+    imageUrl: store.imageUrl,
+    href: `/store/${store.id}`,
+    footerText: "See More >",
+    bgColorClass: "bg-primary-100",
+  }));
+
   return (
     <div className="mx-auto mt-10.5 w-[80%]">
       <RegionSelectBox
@@ -37,15 +46,7 @@ export default function StoreList({ initialStores }: Props) {
         }}
       />
 
-      {stores.length > 0 ? (
-        <div className="grid grid-cols-[repeat(auto-fit,240px)] justify-center gap-x-10.5">
-          {stores.map((store) => (
-            <StoreCard key={store.id} {...store} />
-          ))}
-        </div>
-      ) : (
-        <p className="text-sub-text mt-10.5 text-center">선택한 지역에 등록된 가게가 없습니다.</p>
-      )}
+      <ItemCardList items={cards} />
     </div>
   );
 }
