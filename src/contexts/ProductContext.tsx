@@ -38,7 +38,7 @@ function reducer(state: State, action: Action): State {
     case "ADD_IMAGES":
       return {
         ...state,
-        images: [...state.images, ...action.images.map((file) => ({ id: Date.now(), productId: state.id, image: file }))],
+        images: [...state.images, ...action.images.map((file, index) => ({ id: Date.now() + index, productId: state.id, image: file }))],
       };
 
     case "REMOVE_IMAGE": {
