@@ -25,7 +25,7 @@ export default async function UserProductDetailPage({ params }: { params: Promis
     <div className="flex w-[90%] flex-col pb-[40px]">
       <Link href={`/store/${product.storeId}`} className="f28 w-fit py-[42px]">{`< ${store.name}`}</Link>
       <div className="product-form flex justify-center">
-        <ProductImageList images={product.images}></ProductImageList>
+        <ProductImageList productName={product.name} images={product.images}></ProductImageList>
         <ProductInfo product={product} />
       </div>
     </div>
