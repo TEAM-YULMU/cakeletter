@@ -5,7 +5,7 @@ import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
 import { useSession } from "@/hooks/session-context";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { socket } from "@/lib/socketClient";
 import { getChatMessages } from "@/lib/actions/chat";
 
@@ -15,6 +15,7 @@ export default function ChatRoomPage() {
   const roomId = Number(params.chatId);
 
   const [messages, setMessages] = useState<MessageModel[]>([]);
+  const messageListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!roomId || !session?.id) return;
@@ -71,8 +72,11 @@ export default function ChatRoomPage() {
     ]);
   };
 
+  useEffect(() => {
+    messageListRef.current?.scrollTo(0, messageListRef.current.scrollHeight);
+  }, [messages]);
+
   return (
-    // 패딩 -> 마진
     <div className="h-full w-full bg-gray-100 p-4">
       <MainContainer>
         <ChatContainer className="mt-2">

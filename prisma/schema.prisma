@@ -36,14 +36,12 @@ enum Role {
 }
 
 model Room {
-  id              Int       @id @default(autoincrement())
-  name            String    @unique
-  createdAt       DateTime  @default(now()) @map("created_at")
-  updatedAt       DateTime  @updatedAt @map("updated_at")
+  id              Int      @id @default(autoincrement())
+  name            String
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
   // null: 둘 다 읽기 가능, 특정 유저의 아이디: 해당 유저만 읽기 불가능 (채팅방 나가기 기능을 위함)
-  chatInvisibleTo Int?      @map("chat_invisible_to")
-  lastChat        String?   @map("last_chat")
-  timeOfLastChat  DateTime? @map("time_of_last_chat")
+  chatInvisibleTo Int?     @map("chat_invisible_to")
 
   // member와 room N:M
   members Member[]

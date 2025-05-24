@@ -7,7 +7,7 @@ export const AUTH_ROUTES = {
 };
 
 export const CHAT_ROUTES = {
-  CONVERSATIONS: "/chat",
+  ROOMS: "/chat",
 };
 
 export const PUBLIC_ROUTES = [AUTH_ROUTES.LOGIN, AUTH_ROUTES.SIGN_UP_USER, AUTH_ROUTES.SIGN_UP_OWNER];

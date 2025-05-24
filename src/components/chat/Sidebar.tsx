@@ -1,54 +1,40 @@
 import { CircleUserRound } from "lucide-react";
-import { BASE_URL, CHAT_ROUTES } from "@/constants/routes";
+import { CHAT_ROUTES } from "@/constants/routes";
 import { SidebarItem } from "./SidebarItem";
-// import { getConversationsByUser } from "@/data/user";
+import { getChatRoomsByMember } from "@/data/member";
 
-const SIDEBAR_ITEM = [
-  {
-    id: "1",
-    name: "이름",
-    label: "새로운 대화",
-    icon: <CircleUserRound className="text-gray-600" size={26} />,
-    href: CHAT_ROUTES.CONVERSATIONS,
-  },
-  {
-    id: "2",
-    name: "이름",
-    label: "새로운 대화",
-    icon: <CircleUserRound className="text-gray-600" size={26} />,
-    href: CHAT_ROUTES.CONVERSATIONS,
-  },
-  {
-    id: "3",
-    name: "이름",
-    label: "새로운 대화",
-    icon: <CircleUserRound className="text-gray-600" size={26} />,
-    href: CHAT_ROUTES.CONVERSATIONS,
-  },
-];
+// const SIDEBAR_ITEM = [
+//   {
+//     id: "1",
+//     name: "이름",
+//     lastChat: "새로운 대화",
+//     icon: <CircleUserRound className="text-gray-600" size={26} />,
+//     href: CHAT_ROUTES.ROOMS,
+//   },
+// ];
 
 export async function Sidebar() {
-  //   const conversations = await getConversationsByUser();
+  const rooms = await getChatRoomsByMember();
 
-  //   const formattedItems = [
-  //     NEW_SIDEBAR_ITEM,
-  //     ...conversations.map((conversation) => ({
-  //       id: conversation.id,
-  //       label: conversation.name || "",
-  //       icon: <MessageSquare />,
-  //       href: `${CHAT_ROUTES.CONVERSATIONS}/${conversation.id}`,
-  //     })),
-  //   ];
-
-  const formattedItems = SIDEBAR_ITEM;
+  const formattedItems = rooms.map((room) => ({
+    id: String(room.id),
+    name: room.members?.[0]?.name || "",
+    lastChat: room.lastChat || "",
+    icon: <CircleUserRound className="text-gray-600" size={26} />,
+    href: `${CHAT_ROUTES.ROOMS}/${room.id}`,
+  }));
 
   return (
     <nav className="flex h-full flex-col bg-white text-black">
-      {/*메뉴 아이템 */}
-      <div className="flex flex-col overflow-y-auto">
-        {formattedItems.map((item) => (
-          <SidebarItem key={item.id} item={item} />
-        ))}
+      <div className="flex flex-1 flex-col overflow-y-auto">
+        {formattedItems.length > 0 ? (
+          formattedItems.map((item) => <SidebarItem key={item.id} item={item} />)
+        ) : (
+          <div className="flex flex-1 flex-col items-center justify-center p-4 text-center text-sm text-zinc-500">
+            아직 대화가 없습니다.
+            <br /> 새로운 대화를 시작해보세요!
+          </div>
+        )}
       </div>
     </nav>
   );

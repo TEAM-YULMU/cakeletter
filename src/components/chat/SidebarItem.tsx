@@ -15,12 +15,12 @@ type Props = {
     href: string;
     icon: ReactNode;
     name: string;
-    label: string;
+    lastChat: string;
   };
 };
 
 export function SidebarItem({ item }: Props) {
-  const { id, href, icon, name, label } = item;
+  const { id, href, icon, name, lastChat } = item;
   const pathname = usePathname();
   const params = useParams<{ conversationId: string }>();
   const router = useRouter();
@@ -50,15 +50,15 @@ export function SidebarItem({ item }: Props) {
       className={cn(
         "group flex items-center justify-between border p-3 text-sm text-zinc-800 hover:bg-gray-100 hover:text-black",
 
-        isMenuOpen || pathname === href ? "bg-white text-black" : "text-zinc-400"
+        isMenuOpen || pathname === href ? "bg-gray-100 text-black" : "text-zinc-400"
       )}
     >
-      {/* label영역 */}
-      <div className="flex items-center gap-2">
+      {/* icon, name, lastChat 영역 */}
+      <div className="flex items-center gap-3">
         {icon}
         <div className="flex flex-col">
           <div className="text truncate font-semibold">{name}</div>
-          <div className="truncate text-sm text-zinc-500">{label}</div>
+          <div className="truncate text-sm text-zinc-500">{lastChat}</div>
         </div>
       </div>
       {/* 드롭다운 메뉴 영역 */}
@@ -66,7 +66,7 @@ export function SidebarItem({ item }: Props) {
         <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <DropdownMenuTrigger asChild>
             <div onClick={handleMenu}>
-              <Ellipsis className={cn("text-gray-400 group-hover:block hover:text-black", isMenuOpen ? "block text-white" : "text-gray-400 md:hidden")} />
+              <Ellipsis className={cn("text-gray-400 group-hover:block hover:text-black", isMenuOpen ? "block text-gray-500" : "text-gray-400 md:hidden")} />
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
