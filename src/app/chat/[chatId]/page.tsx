@@ -5,7 +5,7 @@ import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
 import { useSession } from "@/hooks/session-context";
 import { useParams } from "next/navigation";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { socket } from "@/lib/socketClient";
 import { getChatMessages } from "@/lib/actions/chat";
 
@@ -15,7 +15,6 @@ export default function ChatRoomPage() {
   const roomId = Number(params.chatId);
 
   const [messages, setMessages] = useState<MessageModel[]>([]);
-  const messageListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!roomId || !session?.id) return;
@@ -72,25 +71,23 @@ export default function ChatRoomPage() {
     ]);
   };
 
-  useEffect(() => {
-    messageListRef.current?.scrollTo(0, messageListRef.current.scrollHeight);
-  }, [messages]);
-
   return (
     <div className="h-full w-full bg-gray-100 p-4">
-      <MainContainer>
-        <ChatContainer className="mt-2">
-          <MessageList>
-            {messages.map((m, idx) => (
-              <div key={idx} className="mb-2">
-                {m.direction === "incoming" && <div className="ml-2 text-xs text-gray-600">{m.sender}</div>}
-                <Message model={m} />
-              </div>
-            ))}
-          </MessageList>
-          <MessageInput placeholder="메시지를 입력하세요..." onSend={sendMessage} />
-        </ChatContainer>
-      </MainContainer>
+      <div className="flex h-full flex-col">
+        <MainContainer className="h-full">
+          <ChatContainer className="flex h-full flex-col">
+            <MessageList autoScrollToBottom={true} scrollBehavior="smooth" className="min-h-0 flex-1 overflow-y-auto">
+              {messages.map((m, idx) => (
+                <div key={idx} className="mb-2">
+                  {m.direction === "incoming" && <div className="ml-2 text-xs text-gray-600">{m.sender}</div>}
+                  <Message model={m} />
+                </div>
+              ))}
+            </MessageList>
+            <MessageInput placeholder="메시지를 입력하세요..." onSend={sendMessage} className="shrink-0" />
+          </ChatContainer>
+        </MainContainer>
+      </div>
     </div>
   );
 }

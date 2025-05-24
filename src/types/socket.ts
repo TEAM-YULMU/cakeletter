@@ -15,14 +15,3 @@ export type ClientToServerEvents = {
   onJoinRoom: (roomId: string) => void;
   onSend: (data: { memberId: number; roomId: string; chat: string }) => void;
 };
-
-// 서버 간 이벤트
-export type InterServerEvents = {
-  ping: () => void;
-};
-
-// 소켓 연결 시 추가 데이터
-export type SocketData = {
-  name: string;
-  age: number;
-};
