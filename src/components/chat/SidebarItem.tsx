@@ -48,7 +48,7 @@ export function SidebarItem({ item }: Props) {
       href={href}
       scroll={false}
       className={cn(
-        "group flex items-center justify-between border p-3 text-sm text-zinc-800 hover:bg-gray-100 hover:text-black",
+        "group hover:bg-primary-100 flex items-center justify-between border-b p-3 text-sm text-zinc-800 hover:text-black",
 
         isMenuOpen || pathname === href ? "bg-gray-100 text-black" : "text-zinc-400"
       )}

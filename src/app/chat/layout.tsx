@@ -7,7 +7,7 @@ export default function ChatLayout({ children }: { children: React.ReactNode }) 
       <Header />
       <div className="mt-5 mb-5 h-full w-[80%] overflow-hidden md:flex">
         {/* 사이드바 영역 */}
-        <div className="hidden h-full w-[300px] flex-col border-r md:block">
+        <div className="hidden h-full w-[300px] flex-col md:block">
           <Sidebar />
         </div>
         {/* chat 영역 */}

@@ -51,7 +51,7 @@
   .cs-message--outgoing .cs-message__content {
     @apply !bg-[#FFEDFA] !text-black;
   }
-  /* 🩷 상대방 메시지 */
+  /* 상대방 메시지 */
   .cs-message--incoming .cs-message__content {
     @apply !bg-[#EC7FA9] !text-white;
   }

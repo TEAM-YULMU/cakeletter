@@ -25,7 +25,7 @@ export async function Sidebar() {
   }));
 
   return (
-    <nav className="flex h-full flex-col bg-white text-black">
+    <nav className="b flex h-full flex-col border-t border-b border-l bg-white text-black">
       <div className="flex flex-1 flex-col overflow-y-auto">
         {formattedItems.length > 0 ? (
           formattedItems.map((item) => <SidebarItem key={item.id} item={item} />)

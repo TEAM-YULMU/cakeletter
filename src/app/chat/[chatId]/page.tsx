@@ -72,11 +72,11 @@ export default function ChatRoomPage() {
   };
 
   return (
-    <div className="h-full w-full bg-gray-100 p-4">
+    <div className="h-full w-full bg-gray-100 p-3">
       <div className="flex h-full flex-col">
         <MainContainer className="h-full">
           <ChatContainer className="flex h-full flex-col">
-            <MessageList autoScrollToBottom={true} scrollBehavior="smooth" className="min-h-0 flex-1 overflow-y-auto">
+            <MessageList autoScrollToBottom={true} scrollBehavior="smooth" className="mt-2 min-h-0 flex-1 overflow-y-auto">
               {messages.map((m, idx) => (
                 <div key={idx} className="mb-2">
                   {m.direction === "incoming" && <div className="ml-2 text-xs text-gray-600">{m.sender}</div>}
