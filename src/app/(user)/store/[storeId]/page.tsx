@@ -6,11 +6,12 @@ import StoreDescription from "@/components/store/StoreDescription";
 import StoreActionButtons from "@/components/store/StoreActionBtns";
 
 type Props = {
-  params: { storeId: string };
+  params: Promise<{ storeId: string }>;
 };
 
 export default async function StoreDetailPage({ params }: Props) {
-  const storeId = Number(params.storeId);
+  const awaitedParams = await params;
+  const storeId = Number(awaitedParams.storeId);
   if (isNaN(storeId)) notFound();
 
   const store = await prisma.store.findUnique({
