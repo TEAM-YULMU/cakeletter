@@ -89,9 +89,10 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET(req: NextRequest, context: { params: { storeId: string } }) {
+export async function GET(req: NextRequest, context: { params: Promise<{ storeId: string }> }) {
   try {
-    const storeId = parseInt(context.params.storeId, 10);
+    const { storeId: storeIdParam } = await context.params;
+    const storeId = parseInt(storeIdParam, 10);
 
     if (isNaN(storeId)) {
       return NextResponse.json({ message: "유효하지 않은 storeId입니다." }, { status: 400 });

@@ -4,7 +4,7 @@ import { deleteImageFromS3, uploadImageToS3 } from "@/lib/s3";
 import { OptionCategory } from "@/types/product";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PUT(req: NextRequest, { params }: { params: { storeId: string; productId: string } }) {
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ storeId: string; productId: string }> }) {
   const session = await verifySession();
 
   if (!session) {
@@ -15,8 +15,9 @@ export async function PUT(req: NextRequest, { params }: { params: { storeId: str
     where: { memberId: parseInt(session.id) },
   });
 
-  const storeId = parseInt(params.storeId);
-  const productId = parseInt(params.productId);
+  const { storeId: storeIdParam, productId: productIdParam } = await params;
+  const storeId = parseInt(storeIdParam);
+  const productId = parseInt(productIdParam);
 
   if (!store) {
     return NextResponse.json({ message: "사용자 형식이 맞지 않습니다." }, { status: 400 });
@@ -106,7 +107,7 @@ export async function PUT(req: NextRequest, { params }: { params: { storeId: str
   }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { storeId: string; productId: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ storeId: string; productId: string }> }) {
   const session = await verifySession();
 
   if (!session) {
@@ -117,8 +118,9 @@ export async function DELETE(req: NextRequest, { params }: { params: { storeId: 
     where: { memberId: parseInt(session.id) },
   });
 
-  const storeId = parseInt(params.storeId);
-  const productId = parseInt(params.productId);
+  const { storeId: storeIdParam, productId: productIdParam } = await params;
+  const storeId = parseInt(storeIdParam);
+  const productId = parseInt(productIdParam);
 
   if (!store) {
     return NextResponse.json({ message: "사용자 형식이 맞지 않습니다." }, { status: 400 });

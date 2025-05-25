@@ -3,8 +3,9 @@ import ProductListPage from "@/components/product/ProductList";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 
-export default async function UserOrderPage({ params }: { params: { storeId: string } }) {
-  const storeId = parseInt(params.storeId, 10);
+export default async function UserOrderPage({ params }: { params: Promise<{ storeId: string }> }) {
+  const { storeId: storeIdParam } = await params;
+  const storeId = parseInt(storeIdParam, 10);
   if (isNaN(storeId)) notFound();
 
   const [store, products] = await Promise.all([
@@ -12,7 +13,7 @@ export default async function UserOrderPage({ params }: { params: { storeId: str
       where: { id: storeId },
       select: { id: true, name: true },
     }),
-    getProductsByStore(params.storeId),
+    getProductsByStore(storeIdParam),
   ]);
 
   if (!store) notFound();
