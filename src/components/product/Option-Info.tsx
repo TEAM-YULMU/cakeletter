@@ -14,7 +14,7 @@ export default function OptionInfo({ option }: Props) {
         {option.required ? <div className="text-primary-300 f16">필수 선택</div> : null}
         {option.multiple ? <div className="text-primary-300 f16">복수 선택 가능</div> : null}
       </div>
-      <div className="mt-2 w-full overflow-hidden rounded-md">
+      <div className="border-primary-100 mt-2 w-full overflow-hidden rounded-md border">
         <Table className="w-full table-auto">
           <TableBody>
             {option.items.map((item) => (
