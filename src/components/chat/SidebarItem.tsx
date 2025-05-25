@@ -1,13 +1,14 @@
 "use client";
+
 import Link from "next/link";
 import { ReactNode, useState, useEffect } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Ellipsis, LogOut } from "lucide-react";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import toast from "react-hot-toast";
-// import { deleteConversation, } from "@/actions/conversation";
-import { BASE_URL } from "@/constants/routes";
+import { deleteRoom } from "@/lib/actions/chat";
+import { CHAT_ROUTES } from "@/constants/routes";
 
 type Props = {
   item: {
@@ -23,7 +24,6 @@ type Props = {
 export function SidebarItem({ item }: Props) {
   const { id, href, icon, name, lastChat, lastChatAt } = item;
   const pathname = usePathname();
-  const params = useParams<{ conversationId: string }>();
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -33,11 +33,12 @@ export function SidebarItem({ item }: Props) {
 
   const handleDelete = async () => {
     try {
-      // await deleteConversation(id);
+      await deleteRoom(id);
       toast.success("삭제에 성공했습니다.");
-      if (params.conversationId === id) {
-        router.push(BASE_URL);
-      }
+      router.push(CHAT_ROUTES.ROOMS);
+      setTimeout(() => {
+        router.refresh();
+      }, 100);
     } catch (error) {
       console.error(error);
       toast.error("삭제에 실패했습니다.");
@@ -58,6 +59,7 @@ export function SidebarItem({ item }: Props) {
   };
 
   const stripHtml = (html: string) => {
+    if (typeof window === "undefined") return html;
     const div = document.createElement("div");
     div.innerHTML = html;
     return div.textContent || "";
@@ -78,7 +80,7 @@ export function SidebarItem({ item }: Props) {
         <div className="flex flex-col">
           <div className="flex items-center justify-between">
             <div className="w-[155px] truncate font-semibold text-zinc-500">{name}</div>
-            <div className="text-xs text-zinc-400">{formatTime(item.lastChatAt)}</div>
+            <div className="text-xs text-zinc-400">{formatTime(lastChatAt)}</div>
           </div>
           <div className="w-[180px] truncate text-sm text-zinc-500">{stripHtml(lastChat)}</div>
         </div>
