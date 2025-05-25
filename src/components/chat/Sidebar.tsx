@@ -20,6 +20,7 @@ export async function Sidebar() {
     id: String(room.id),
     name: room.members?.[0]?.name || "",
     lastChat: room.lastChat || "",
+    lastChatAt: room.lastChatAt || "",
     icon: <CircleUserRound className="text-gray-600" size={26} />,
     href: `${CHAT_ROUTES.ROOMS}/${room.id}`,
   }));

@@ -43,6 +43,10 @@ app.prepare().then(() => {
               },
             },
           },
+          select: {
+            chat: true,
+            createdAt: true,
+          },
         });
 
         // memberId로 member id, name 가져오는 구문
@@ -56,13 +60,14 @@ app.prepare().then(() => {
           },
         });
 
-        // 채팅 저장, 회원 정보 조회 병렬 실행
-        const [member] = await Promise.all([memberPromise, chatPromise]);
+        // 회원 정보 조회, 채팅 저장 병렬 실행 (순서 중요: chat → chat.createdAt 필요)
+        const [member, savedChat] = await Promise.all([memberPromise, chatPromise]);
 
         // member 정보와 채팅 내용 브로드캐스트
         socket.to(roomId).emit("onReceive", {
           member: member as SimpleMember,
-          chat,
+          chat: savedChat.chat,
+          createdAt: savedChat.createdAt,
         });
       });
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { ChatContainer, MainContainer, Message, MessageInput, MessageList, type MessageModel } from "@chatscope/chat-ui-kit-react";
+import { ChatContainer, MainContainer, Message, MessageInput, MessageList } from "@chatscope/chat-ui-kit-react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
 import { useSession } from "@/hooks/session-context";
@@ -8,6 +8,15 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { socket } from "@/lib/socketClient";
 import { getChatMessages } from "@/lib/actions/chat";
+import { cn } from "@/lib/utils";
+
+type MessageModel = {
+  message: string;
+  sender: string;
+  direction: "incoming" | "outgoing";
+  position: "single";
+  createdAt?: Date;
+};
 
 export default function ChatRoomPage() {
   const { session } = useSession();
@@ -27,6 +36,7 @@ export default function ChatRoomPage() {
           sender: chat.member?.name ?? "unknown",
           direction: chat.memberId === Number(session.id) ? "outgoing" : "incoming",
           position: "single",
+          createdAt: new Date(chat.createdAt),
         })
       );
       setMessages(formatted);
@@ -36,12 +46,13 @@ export default function ChatRoomPage() {
     socket.emit("onJoinRoom", roomId);
 
     // 새 메시지 수신
-    socket.on("onReceive", (data: { member: { id: number; name: string }; chat: string }) => {
+    socket.on("onReceive", (data: { member: { id: number; name: string }; chat: string; createdAt: string }) => {
       const newMsg: MessageModel = {
         message: data.chat,
         sender: data.member.name,
         direction: data.member.id === Number(session.id) ? "outgoing" : "incoming",
         position: "single",
+        createdAt: new Date(data.createdAt),
       };
       setMessages((prev) => [...prev, newMsg]);
     });
@@ -67,8 +78,14 @@ export default function ChatRoomPage() {
         sender: "me",
         direction: "outgoing",
         position: "single",
+        createdAt: new Date(),
       },
     ]);
+  };
+
+  const formatTime = (date?: Date) => {
+    if (!date) return "";
+    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
   return (
@@ -79,8 +96,9 @@ export default function ChatRoomPage() {
             <MessageList autoScrollToBottom={true} scrollBehavior="smooth" className="mt-2 min-h-0 flex-1 overflow-y-auto">
               {messages.map((m, idx) => (
                 <div key={idx} className="mb-2">
-                  {m.direction === "incoming" && <div className="ml-2 text-xs text-gray-600">{m.sender}</div>}
+                  {m.direction === "incoming" && <div className="ml-1 text-sm text-gray-600">{m.sender}</div>}
                   <Message model={m} />
+                  <div className={cn("mt-1 text-xs text-gray-400", m.direction === "incoming" ? "ml-1 text-left" : "mr-1 mb-3 text-right")}>{formatTime(m.createdAt)}</div>
                 </div>
               ))}
             </MessageList>
