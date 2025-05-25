@@ -30,3 +30,9 @@ export type OptionItem = {
   addtionalPrice?: number;
   description?: string;
 };
+
+export type ProductPreview = {
+  id: number;
+  name: string;
+  imageUrl: string | null;
+};

@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import RegionSelectBox from "./RegionSelectBox";
-import { StoreCard } from "./StoreCard";
-import type { StoreCardProps } from "@/types/store";
+import RegionSelectBox from "@/components/store/RegionSelectBox";
+import ItemCardList from "@/components/common/ItemList";
+import { StoreCardProps } from "@/types/store";
+import { getFilteredStores } from "@/lib/api/store";
 
 type Props = {
   initialStores: StoreCardProps[];
@@ -16,36 +17,37 @@ export default function StoreList({ initialStores }: Props) {
 
   useEffect(() => {
     const fetchStores = async () => {
-      const params = new URLSearchParams();
-      if (selectedProvince) params.append("city_province", selectedProvince);
-      if (selectedDistrict) params.append("district", selectedDistrict);
-
-      const res = await fetch(`/api/stores?${params.toString()}`);
-      const data = await res.json();
-      setStores(data);
+      try {
+        const data = await getFilteredStores(selectedProvince, selectedDistrict);
+        setStores(data);
+      } catch {
+        console.error("가게 불러오기 실패");
+      }
     };
 
     fetchStores();
   }, [selectedProvince, selectedDistrict]);
 
-  return (
-    <div className="mx-auto mt-10.5 w-[80%]">
-      <RegionSelectBox
-        onChange={(province, district) => {
-          setSelectedProvince(province);
-          setSelectedDistrict(district);
-        }}
-      />
+  const cards = stores.map((store) => ({
+    id: store.id,
+    title: store.name,
+    imageUrl: store.imageUrl,
+    href: `/store/${store.id}`,
+    footerText: "See More >",
+    bgColorClass: "bg-primary-100",
+  }));
 
-      {stores.length > 0 ? (
-        <div className="grid grid-cols-[repeat(auto-fit,240px)] justify-center gap-x-10.5">
-          {stores.map((store) => (
-            <StoreCard key={store.id} {...store} />
-          ))}
-        </div>
-      ) : (
-        <p className="text-sub-text mt-10.5 text-center">선택한 지역에 등록된 가게가 없습니다.</p>
-      )}
+  return (
+    <div className="mx-auto mt-10.5 w-full">
+      <div className="ml-15.5">
+        <RegionSelectBox
+          onChange={(province, district) => {
+            setSelectedProvince(province);
+            setSelectedDistrict(district);
+          }}
+        />
+      </div>
+      <ItemCardList items={cards} />
     </div>
   );
 }

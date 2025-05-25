@@ -19,7 +19,7 @@ if (!process.env.AWS_SECRET_ACCESS_KEY) {
 }
 
 const s3 = new S3({
-  region: "us-east-1",
+  region: process.env.REGION,
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -40,7 +40,7 @@ type S3ImageDeleteReq = {
 
 export async function uploadImageToS3({ path, image }: S3ImageUploadReq) {
   const extension = image.name.split(".").pop();
-  const fileName = `image_${new Date().getTime()}.${extension}`;
+  const fileName = `image_${Date.now()}_${Math.floor(Math.random() * 100000)}.${extension}`;
   const pathKey = `${path}/${fileName}`;
   const bufferedImage = await image.arrayBuffer();
 
@@ -56,11 +56,11 @@ export async function uploadImageToS3({ path, image }: S3ImageUploadReq) {
     throw error;
   }
 
-  return `${S3_URL_PREFIX}/${pathKey}`;
+  return `${S3_URL_PREFIX}${pathKey}`;
 }
 
 export async function deleteImageFromS3({ url }: S3ImageDeleteReq) {
-  const pathKey = url.split(S3_URL_PREFIX)[1];
+  const pathKey = url.replace(S3_URL_PREFIX, "");
 
   try {
     await s3.deleteObject({

@@ -52,7 +52,14 @@ export default function OptionInputForm({ index, onRemoveOption }: Props) {
         <LabelWithCheckBox label="다중 선택 가능" checked={state.options[index].multiple} onChange={handleChangeMultiple} />
       </div>
 
-      <LabelWithInput label="옵션 제목" name={`${optionName}-name`} placeholder="추가할 옵션의 제목을 입력해주세요" onChange={handleChangeOptionName} required={true} />
+      <LabelWithInput
+        label="옵션 제목"
+        name={`${optionName}-name`}
+        value={state.options[index].name}
+        placeholder="추가할 옵션의 제목을 입력해주세요"
+        onChange={handleChangeOptionName}
+        required={true}
+      />
 
       {state.options[index] &&
         state.options[index].items.map((item, itemIndex) => (
