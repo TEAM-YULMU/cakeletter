@@ -47,6 +47,13 @@
     letter-spacing: -0.015em;
   }
 
+  /* header */
+  .cs-conversation-header {
+    @apply !bg-[#FFF7FD];
+  }
+  .cs-conversation-header__user-name {
+    @apply !bg-[#FFF7FD] !text-base !text-gray-600;
+  }
   /* :큰_보라색_원: 내가 보낸 메시지 */
   .cs-message--outgoing .cs-message__content {
     @apply !bg-[#FFEDFA] !text-black;

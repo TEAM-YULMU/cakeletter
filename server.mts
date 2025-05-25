@@ -22,7 +22,7 @@ app.prepare().then(() => {
 
     socket.on("onJoinRoom", (roomId) => {
       console.log("채팅방 입장 >> ", roomId);
-      socket.join(roomId);
+      socket.join(String(roomId));
     });
 
     socket.on("onSend", async ({ memberId, roomId, chat }) => {
@@ -64,7 +64,7 @@ app.prepare().then(() => {
         const [member, savedChat] = await Promise.all([memberPromise, chatPromise]);
 
         // member 정보와 채팅 내용 브로드캐스트
-        socket.to(roomId).emit("onReceive", {
+        socket.to(String(roomId)).emit("onReceive", {
           member: member as SimpleMember,
           chat: savedChat.chat,
           createdAt: savedChat.createdAt,

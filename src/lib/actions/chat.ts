@@ -6,7 +6,19 @@ import { revalidatePath } from "next/cache";
 import { CHAT_ROUTES } from "@/constants/routes";
 
 export const getChatMessages = async (roomId: number) => {
-  return await prisma.chat.findMany({
+  const room = await prisma.room.findUnique({
+    where: { id: roomId },
+    select: {
+      id: true,
+      name: true,
+    },
+  });
+
+  if (!room) {
+    throw new Error("채팅방이 존재하지 않습니다.");
+  }
+
+  const messages = await prisma.chat.findMany({
     where: { roomId },
     include: {
       member: {
@@ -20,6 +32,11 @@ export const getChatMessages = async (roomId: number) => {
       createdAt: "asc",
     },
   });
+
+  return {
+    room, // 헤더용 정보
+    messages, // 메시지 목록
+  };
 };
 
 export const deleteRoom = async (roomId: string) => {
