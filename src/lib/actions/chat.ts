@@ -41,6 +41,11 @@ export const getChatMessages = async (roomId: number) => {
 
 export const deleteRoom = async (roomId: string) => {
   const session = await verifySession();
+
+  if (!session) {
+    throw new Error("인증된 사용자만 사용할 수 있습니다.");
+  }
+
   const userId = Number(session.id);
 
   const id = Number(roomId);

@@ -1,6 +1,8 @@
 import { Header } from "@/components/layout/Header";
 import { Sidebar } from "@/components/chat/Sidebar";
 
+export const revalidate = 0;
+
 export default function ChatLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="mx-auto flex h-screen w-[90%] flex-col items-center overflow-hidden">

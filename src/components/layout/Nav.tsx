@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSession } from "@/hooks/session-context";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { LogIn } from "lucide-react";
 import { LogoutButton } from "./LogoutButton";
@@ -10,8 +10,15 @@ import { LogoutButton } from "./LogoutButton";
 export default function Nav() {
   const { session } = useSession();
   const pathname = usePathname();
+  const router = useRouter();
 
   const isActive = (path: string) => pathname === path;
+
+  const handleChatClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    router.push("/chat");
+    router.refresh();
+  };
 
   // href 임시 설정
   return (
@@ -22,7 +29,7 @@ export default function Nav() {
         </Link>
 
         {session && (
-          <Link href="/chat" className={cn("hover:text-primary flex items-center font-medium transition-colors", isActive("/chat") ? "text-primary" : "text-sub-text")}>
+          <Link href="/chat" onClick={handleChatClick} className={cn("hover:text-primary flex items-center font-medium transition-colors", isActive("/chat") ? "text-primary" : "text-sub-text")}>
             CHAT
           </Link>
         )}
