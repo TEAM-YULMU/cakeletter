@@ -1,6 +1,6 @@
 import { Product } from "@/types/product";
 import OptionInfo from "./Option-Info";
-import { Button } from "../ui/button";
+import CreateOrJoinChatButton from "../chat/CreateOrJoinChatButton";
 
 type Props = {
   product: Product;
@@ -15,7 +15,10 @@ export default function ProductInfo({ product }: Props) {
       {product.options.map((option) => (
         <OptionInfo key={option.id} option={option} />
       ))}
-      <Button className="f16 bg-primary-300 hover:bg-primary-400 h-12 w-full">{"주문하기 >"}</Button>
+      {/* <Button className="f16 bg-primary-300 hover:bg-primary-400 h-12 w-full">{"주문하기 >"}</Button> */}
+      <CreateOrJoinChatButton storeId={product.id} className="f16 bg-primary-300 hover:bg-primary-400 h-12 w-full">
+        {"주문하기 >"}
+      </CreateOrJoinChatButton>
     </div>
   );
 }

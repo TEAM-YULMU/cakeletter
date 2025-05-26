@@ -114,6 +114,46 @@
   .tracking-tight {
     letter-spacing: -0.015em;
   }
+
+  /* header */
+  .cs-conversation-header {
+    @apply !bg-[#FFF7FD];
+  }
+  .cs-conversation-header__user-name {
+    @apply !bg-[#FFF7FD] !text-base !text-gray-600;
+  }
+  /* :큰_보라색_원: 내가 보낸 메시지 */
+  .cs-message--outgoing .cs-message__content {
+    @apply !bg-[#FFEDFA] !text-black;
+  }
+  /* 상대방 메시지 */
+  .cs-message--incoming .cs-message__content {
+    @apply !bg-[#EC7FA9] !text-white;
+  }
+  /* :큰_주황색_원: 입력창 전체 (배경 유지) */
+  .cs-message-input {
+    @apply bg-white;
+  }
+  /* :말풍선: 입력창 텍스트 영역 */
+  .cs-message-input__content-editor-wrapper {
+    @apply !border !border-[#FFEDFA] !rounded-xl !bg-[#FFEDFA];
+  }
+  /* :말풍선: 입력창 텍스트 영역 */
+  .cs-message-input__content-editor {
+    @apply !bg-[#FFEDFA] !text-black;
+  }
+  /* :연필2: 포커스 시 보더 색상도 유지 */
+  .cs-message-input__content-editor:focus {
+    @apply !outline-none !ring-0;
+  }
+  /* :안전핀: 아이콘 색상 (예: 전송 버튼) */
+  .cs-button svg {
+    @apply !text-[#FFB8E0] !fill-[#FFB8E0];
+  }
+  /* 스크롤바 색상 */
+  .ps__thumb-y {
+    @apply !bg-[#EC7FA9];
+  }
 }
 
 /* ========== Custom Colors ========== */

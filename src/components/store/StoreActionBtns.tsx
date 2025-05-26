@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import CreateOrJoinChatButton from "../chat/CreateOrJoinChatButton";
 
 export default function StoreActionButtons({ storeId }: { storeId: number }) {
   const router = useRouter();
@@ -12,9 +13,12 @@ export default function StoreActionButtons({ storeId }: { storeId: number }) {
         상품 보기 &gt;
       </Button>
 
-      <Button variant="outline" className="f16 bg-secondary-100 text-sub-text hover:bg-secondary-300 h-12 w-50 rounded-md border-none" onClick={() => router.push(`/chat`)}>
+      {/* <Button variant="outline" className="f16 bg-secondary-100 text-sub-text hover:bg-secondary-300 h-12 w-50 rounded-md border-none" onClick={() => router.push(`/chat`)}>
         커스텀 주문 &gt;
-      </Button>
+      </Button> */}
+      <CreateOrJoinChatButton storeId={storeId} variant="outline" className="f16 bg-secondary-100 text-sub-text hover:bg-secondary-300 h-12 w-50 rounded-md border-none">
+        {"커스텀 주문 >"}
+      </CreateOrJoinChatButton>
     </div>
   );
 }
