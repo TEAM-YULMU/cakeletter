@@ -26,6 +26,11 @@ export async function POST(req: NextRequest) {
   const memberId = +session.id;
   const ownerId = store.memberId;
 
+  // 본인 가게일 경우
+  if (memberId === ownerId) {
+    return NextResponse.json({ ok: false, message: "내 가게와는 채팅을 시작할 수 없습니다." }, { status: 400 });
+  }
+
   // 두 명의 멤버가 연결된 방이 있는지 찾기
   const exRoom = await prisma.room.findFirst({
     where: {
