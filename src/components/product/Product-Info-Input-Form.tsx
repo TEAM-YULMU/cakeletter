@@ -9,6 +9,7 @@ import OptionInputForm from "./Option-Input-Form";
 import { Button } from "../ui/button";
 import { useProductContext } from "@/contexts/ProductContext";
 import { DialogButton } from "../Dialog-Button";
+import { Textarea } from "../ui/textarea";
 
 type Props = {
   isSubmitting: boolean;
@@ -32,7 +33,7 @@ export default function ProductInfoInputForm({ isSubmitting, onDelete }: Props) 
     dispatch({ type: "UPDATE_FIELD", key: "name", value: event.target.value });
   };
 
-  const handleChangeDesc = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeDesc = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     dispatch({ type: "UPDATE_FIELD", key: "description", value: event.target.value });
   };
 
@@ -56,7 +57,9 @@ export default function ProductInfoInputForm({ isSubmitting, onDelete }: Props) 
   return (
     <div className="mix-w-[300px] flex w-full max-w-[550px] flex-col gap-[20px]">
       <LabelWithInput name="name" label="케이크 이름" type="text" value={state.name} placeholder="케이크 이름을 입력해주세요" onChange={handleChangeName} required={true} />
-      <LabelWithInput name="desc" label="케이크 설명" type="text" value={state.description} placeholder="케이크 설명을 입력해주세요" onChange={handleChangeDesc} />
+      <LabelWithInput name="desc" label="케이크 설명" type="text">
+        <Textarea className="h-36" id="desc" name="desc" placeholder="케이크 설명을 입력해주세요" rows={6} maxLength={1000} value={state.description} onChange={handleChangeDesc} />
+      </LabelWithInput>
       <LabelWithInput name="price" label="케이크 가격">
         <Input id="price" name="price" type="text" inputMode="numeric" value={price} maxLength={11} placeholder="케이크 가격을 입력해주세요" onChange={handleChangePrice} required={true} />
       </LabelWithInput>
