@@ -33,7 +33,7 @@ const downloadImage = async (imageUrl: string, fileName = "downloaded.jpg") => {
 export default function ProductImageList({ productName, images }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const maxSize = 550;
+  const maxSize = 600;
 
   const handleImageClick = (index: number) => {
     setCurrentIndex(index);
@@ -46,9 +46,9 @@ export default function ProductImageList({ productName, images }: Props) {
   return (
     <div className="w-full" style={{ maxWidth: `${maxSize}px` }}>
       <div>
-        <div className="relative mb-[10px] aspect-square h-full max-h-[550px] w-full max-w-[550px] overflow-hidden" style={{ maxHeight: `${maxSize}px`, maxWidth: `${maxSize}px` }}>
-          <SquareImage key={images[currentIndex].id} src={images[currentIndex].image} alt={"thumbnail"} size={550} />
-          <ImageActionButton size={550} onAction={downloadCurrentImage}>
+        <div className="relative mb-[10px] aspect-square h-full max-h-[600px] w-full max-w-[600px] overflow-hidden" style={{ maxHeight: `${maxSize}px`, maxWidth: `${maxSize}px` }}>
+          <SquareImage key={images[currentIndex].id} src={images[currentIndex].image} alt={"thumbnail"} size={maxSize} />
+          <ImageActionButton size={maxSize} onAction={downloadCurrentImage}>
             <Download className="h-full w-full text-white" />
           </ImageActionButton>
         </div>

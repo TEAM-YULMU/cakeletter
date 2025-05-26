@@ -15,7 +15,7 @@ export default function SquareImage({ src, alt, size, isFixedSize, onClick }: Pr
   if (!imageUrl) {
     return (
       <div
-        className="bg-line relative aspect-square overflow-hidden"
+        className="bg-line relative aspect-square overflow-hidden rounded-md"
         style={{
           maxWidth: `${size}px`,
           maxHeight: `${size}px`,
@@ -37,7 +37,7 @@ export default function SquareImage({ src, alt, size, isFixedSize, onClick }: Pr
         height: isFixedSize ? `${size}px` : "100%",
       }}
     >
-      <Image className="object-cover" src={imageUrl} alt={alt} fill />
+      <Image className="rounded-md object-cover" src={imageUrl} alt={alt} fill />
     </div>
   );
 }
