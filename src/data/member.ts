@@ -60,6 +60,7 @@ export const getChatRoomsByMember = async () => {
         chat: true,
         createdAt: true,
         roomId: true,
+        imageUrl: true,
       },
       orderBy: {
         createdAt: "desc",
@@ -77,7 +78,7 @@ export const getChatRoomsByMember = async () => {
       if (!room) return null;
       return {
         ...room,
-        lastChat: chat.chat,
+        lastChat: chat.imageUrl ? `사진을 보냈습니다.` : chat.chat,
         lastChatAt: chat.createdAt,
       };
     })

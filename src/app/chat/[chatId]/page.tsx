@@ -5,14 +5,17 @@ import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
 import { useSession } from "@/hooks/session-context";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { socket } from "@/lib/socketClient";
 import { getChatMessages } from "@/lib/actions/chat";
 import { cn } from "@/lib/utils";
 import { ChatHeader } from "@/components/chat/ChatHeader";
+import { ImageInput } from "@/components/Image-Input";
+import SquareImage from "@/components/SquareImage";
 
 type MessageModel = {
   message: string;
+  image?: string | File;
   sender: string;
   direction: "incoming" | "outgoing";
   position: "single";
@@ -20,6 +23,7 @@ type MessageModel = {
 };
 
 export default function ChatRoomPage() {
+  const imageInput = useRef<HTMLInputElement>(null);
   const { session } = useSession();
   const params = useParams();
   const roomId = Number(params.chatId);
@@ -36,7 +40,8 @@ export default function ChatRoomPage() {
 
       const formatted = data.messages.map(
         (chat): MessageModel => ({
-          message: chat.chat,
+          message: chat.chat ?? "",
+          image: chat.imageUrl ?? "",
           sender: chat.member?.name ?? "unknown",
           direction: chat.memberId === Number(session.id) ? "outgoing" : "incoming",
           position: "single",
@@ -51,9 +56,10 @@ export default function ChatRoomPage() {
     socket.emit("onJoinRoom", roomId);
 
     // 새 메시지 수신
-    socket.on("onReceive", (data: { member: { id: number; name: string }; chat: string; createdAt: string }) => {
+    socket.on("onReceive", (data: { member: { id: number; name: string }; chat: string; image: string; createdAt: string }) => {
       const newMsg: MessageModel = {
         message: data.chat,
+        image: data.image,
         sender: data.member.name,
         direction: data.member.id === Number(session.id) ? "outgoing" : "incoming",
         position: "single",
@@ -93,6 +99,49 @@ export default function ChatRoomPage() {
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
+  const handleClickToAddImage = () => {
+    imageInput.current?.click();
+  };
+
+  const handleSelectImages = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (!file || !session) return;
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const base64Image = reader.result as string;
+
+      socket.emit("onSend", {
+        memberId: Number(session?.id),
+        roomId,
+        chat: "",
+        imageData: base64Image,
+      });
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          message: "",
+          image: base64Image,
+          sender: "me",
+          direction: "outgoing",
+          position: "single",
+          createdAt: new Date(),
+        },
+      ]);
+    };
+
+    reader.readAsDataURL(file);
+
+    // Ref 초기화
+    // 초기화 안할 경우 특정 이미지 추가하고 제거 후 다시 같은 이미지 추가하면 추가가 안됨
+    if (imageInput.current) {
+      imageInput.current.value = "";
+    }
+  };
+
   return (
     <div className="h-full w-full bg-gray-100 p-1">
       <div className="flex h-full flex-col">
@@ -107,6 +156,7 @@ export default function ChatRoomPage() {
         </div>
         {/* 나머지 영역이 채팅 컨텐츠 (스크롤 가능) */}
         <div className="flex flex-1 overflow-hidden">
+          <ImageInput name={"image"} onChange={handleSelectImages} ref={imageInput} />
           <MainContainer className="h-full w-full">
             <ChatContainer className="flex h-full flex-col">
               {/* 메시지 영역이 스크롤 대상 */}
@@ -114,12 +164,18 @@ export default function ChatRoomPage() {
                 {messages.map((m, idx) => (
                   <div key={idx} className="mb-2">
                     {m.direction === "incoming" && <div className="ml-1 text-sm text-gray-600">{m.sender}</div>}
-                    <Message model={m} />
+                    {m.image ? (
+                      <div className={cn("mt-1 flex flex-row", m.direction === "incoming" ? "justify-start" : "justify-end")}>
+                        <SquareImage src={m.image} alt="image" size={200} />
+                      </div>
+                    ) : (
+                      <Message model={m} />
+                    )}
                     <div className={cn("mt-1 text-xs text-gray-400", m.direction === "incoming" ? "ml-1 text-left" : "mr-1 mb-3 text-right")}>{formatTime(m.createdAt)}</div>
                   </div>
                 ))}
               </MessageList>
-              <MessageInput placeholder="메시지를 입력하세요..." onSend={sendMessage} className="shrink-0" />
+              <MessageInput className="shrink-0" placeholder="메시지를 입력하세요..." onSend={sendMessage} onAttachClick={handleClickToAddImage} />
             </ChatContainer>
           </MainContainer>
         </div>

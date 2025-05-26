@@ -29,16 +29,21 @@ const s3 = new S3({
 // path는 타입/타입ID 순으로 입력
 // ex) store/
 // ex) store/:store_id/product
-type S3ImageUploadReq = {
+type S3FileImageUploadReq = {
   path: string;
   image: File;
+};
+
+type S3Base64ImageUploadReq = {
+  path: string;
+  imageData: string;
 };
 
 type S3ImageDeleteReq = {
   url: string;
 };
 
-export async function uploadImageToS3({ path, image }: S3ImageUploadReq) {
+export async function uploadFileImageToS3({ path, image }: S3FileImageUploadReq) {
   const extension = image.name.split(".").pop();
   const fileName = `image_${Date.now()}_${Math.floor(Math.random() * 100000)}.${extension}`;
   const pathKey = `${path}/${fileName}`;
@@ -50,6 +55,29 @@ export async function uploadImageToS3({ path, image }: S3ImageUploadReq) {
       Key: pathKey,
       Body: Buffer.from(bufferedImage),
       ContentType: image.type,
+    });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+
+  return `${S3_URL_PREFIX}${pathKey}`;
+}
+
+export async function uploadBase64ImageToS3({ path, imageData }: S3Base64ImageUploadReq) {
+  const extension = "png";
+  const base64Data = imageData.replace(/^data:image\/\w+;base64,/, "");
+  const buffer = Buffer.from(base64Data, "base64");
+  const fileName = `image_${Date.now()}_${Math.floor(Math.random() * 100000)}.${extension}`;
+  const pathKey = `${path}/${fileName}`;
+
+  try {
+    await s3.putObject({
+      Bucket: process.env.S3_BUCKET,
+      Key: pathKey,
+      Body: Buffer.from(buffer),
+      ContentEncoding: "base64", // 중요
+      ContentType: "image/png", // 예: "image/png"
     });
   } catch (error) {
     console.log(error);
