@@ -51,16 +51,16 @@ model Room {
 
 model Chat {
   id        Int      @id @default(autoincrement())
-  chat      String
+  chat      String?
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  imageUrl  String   @map("image_url") @db.Text
+  imageUrl  String?  @map("image_url") @db.Text
 
-  member   Member? @relation(fields: [memberId], references: [id], onDelete: Cascade)
-  memberId Int?    @map("member_id")
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  memberId Int    @map("member_id")
 
-  room   Room? @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  roomId Int?  @map("room_id")
+  room   Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  roomId Int  @map("room_id")
 
   @@index([memberId])
   @@index([roomId])
