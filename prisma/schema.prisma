@@ -54,6 +54,7 @@ model Chat {
   chat      String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+  imageUrl  String   @map("image_url") @db.Text
 
   member   Member? @relation(fields: [memberId], references: [id], onDelete: Cascade)
   memberId Int?    @map("member_id")
@@ -100,7 +101,7 @@ model Product {
 model Image {
   id        Int      @id @default(autoincrement())
   productId Int      @map("product_id")
-  url       String   @db.VarChar(1000)
+  url       String   @db.Text
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
