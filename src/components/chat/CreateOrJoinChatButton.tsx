@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import type { ButtonProps } from "@/components/ui/button";
+import toast from "react-hot-toast";
 
 type Props = {
   storeId: number;
@@ -27,11 +28,11 @@ export default function CreateOrJoinChatButton({ storeId, className, variant, ch
       if (data.ok && data.ok && data.roomId) {
         router.push(`/chat/${data.roomId}`); // 채팅 페이지로 이동
       } else {
-        alert(data.message);
+        toast.error(data.message);
       }
     } catch (error) {
       console.error("채팅방 생성 오류:", error);
-      alert("문제가 발생했습니다. 다시 시도해주세요.");
+      toast.error("문제가 발생했습니다. 다시 시도해주세요.");
     }
   };
 
