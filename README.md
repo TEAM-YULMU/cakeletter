@@ -84,6 +84,18 @@
 </td>
 </tr>
 <tr>
+<td>상품 수정 페이지</td>
+  <td align="center">
+   <img src="https://github.com/user-attachments/assets/2250aa66-a36c-468c-9967-c9a916d4df2c" />
+</td>
+</tr>
+<tr>
+<td>상품 삭제</td>
+  <td align="center">
+   <img src="https://github.com/user-attachments/assets/a4a83114-2b3a-4892-a131-4c390214da31" />
+</td>
+</tr>
+<tr>
 <td>일반유저 채팅 페이지</td>
   <td align="center">
   <img src="https://github.com/user-attachments/assets/4b172aee-6a90-4c91-8e98-4de2bfb9e3da" />
