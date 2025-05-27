@@ -26,7 +26,7 @@ export default async function UserProductDetailPage({ params }: { params: Promis
       <BackTitle title={store.name} />
       <div className="product-form mt-10.5 flex justify-center">
         <ProductImageList productName={product.name} images={product.images}></ProductImageList>
-        <ProductInfo product={product} />
+        <ProductInfo product={product} storeId={storeId} />
       </div>
     </div>
   );

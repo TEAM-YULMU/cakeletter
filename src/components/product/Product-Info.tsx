@@ -4,9 +4,10 @@ import CreateOrJoinChatButton from "../chat/CreateOrJoinChatButton";
 
 type Props = {
   product: Product;
+  storeId: number;
 };
 
-export default function ProductInfo({ product }: Props) {
+export default function ProductInfo({ product, storeId }: Props) {
   return (
     <div className="mix-w-[300px] flex w-full max-w-[600px] flex-col gap-7.5">
       <p className="f36 text-medium text-primary-text leading-none">{product.name}</p>
@@ -15,7 +16,7 @@ export default function ProductInfo({ product }: Props) {
       {product.options.map((option) => (
         <OptionInfo key={option.id} option={option} />
       ))}
-      <CreateOrJoinChatButton storeId={product.id} className="f18 bg-primary-300 hover:bg-primary-400 h-12 w-full">
+      <CreateOrJoinChatButton storeId={storeId} className="f18 bg-primary-300 hover:bg-primary-400 h-12 w-full">
         {"주문하기 >"}
       </CreateOrJoinChatButton>
     </div>
