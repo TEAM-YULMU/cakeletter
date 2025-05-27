@@ -3,6 +3,7 @@ import { uploadFileImageToS3 } from "@/lib/s3";
 import { prisma } from "@/lib/prisma";
 import { verifySession } from "@/lib/actions/sessions";
 import { OptionCategory, ProductPreview } from "@/types/product";
+import { revalidatePath } from "next/cache";
 
 export async function POST(req: NextRequest) {
   const session = await verifySession();
@@ -83,6 +84,7 @@ export async function POST(req: NextRequest) {
       return product;
     });
 
+    revalidatePath("/owner");
     return NextResponse.json({ message: "상품 등록 성공", productId: product.id }, { status: 200 });
   } catch {
     return NextResponse.json({ message: "상품 등록 실패" }, { status: 500 });

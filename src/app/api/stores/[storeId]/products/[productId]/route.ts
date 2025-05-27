@@ -2,6 +2,7 @@ import { verifySession } from "@/lib/actions/sessions";
 import { prisma } from "@/lib/prisma";
 import { deleteImageFromS3, uploadFileImageToS3 } from "@/lib/s3";
 import { OptionCategory } from "@/types/product";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ storeId: string; productId: string }> }) {
@@ -76,6 +77,13 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ stor
       // s3 삭제한 이미지 삭제
       await Promise.all(removedUrlImages.map((url) => deleteImageFromS3({ url })));
 
+      // 이미지 DB 삭제
+      for (const url of removedUrlImages) {
+        await tx.image.deleteMany({
+          where: { url: url },
+        });
+      }
+
       // s3 업로드
       const urls = await Promise.all(
         files
@@ -101,6 +109,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ stor
       return product;
     });
 
+    revalidatePath("/owner");
     return NextResponse.json({ message: "상품 수정 성공.", productId: product.id }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: "상품 수정 실패.", error: String(error) }, { status: 500 });
