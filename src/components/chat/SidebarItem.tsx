@@ -17,7 +17,7 @@ type Props = {
 };
 
 export function SidebarItem({ item }: Props) {
-  const { id, href, icon, name, lastChat, lastChatAt } = item;
+  const { href, icon, name, lastChat, lastChatAt } = item;
   const pathname = usePathname();
 
   const formatTime = (date?: Date) => {

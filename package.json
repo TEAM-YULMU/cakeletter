@@ -10,7 +10,9 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "prepare": "husky install",
-    "dev:socket": "cross-env NODE_OPTIONS=\"--loader ts-node/esm --trace-warnings --no-warnings\" ts-node server.mts"
+    "dev:socket": "cross-env NODE_OPTIONS=\"--loader ts-node/esm --trace-warnings --no-warnings\" ts-node server.mts",
+    "build:socket" : "next build && tsc --project tsconfig.server.json",
+    "start:socket" : "cross-env NODE_ENV=production node dist/server.mjs"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

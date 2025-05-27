@@ -2,7 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifySession } from "@/lib/actions/sessions";
 import { getChatMessages } from "@/lib/actions/chat";
 
-export async function GET(req: NextRequest, { params }: { params: { chatId: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ chatId: string }> }) {
+  const { chatId: chatIdParam } = await params;
+  const chatId = parseInt(chatIdParam);
+
   try {
     const session = await verifySession();
 
@@ -10,7 +13,7 @@ export async function GET(req: NextRequest, { params }: { params: { chatId: stri
       return NextResponse.json({ ok: false, message: "인증되지 않은 사용자입니다." }, { status: 401 });
     }
 
-    const data = await getChatMessages(Number(params.chatId), Number(session.id));
+    const data = await getChatMessages(chatId, Number(session.id));
 
     return NextResponse.json({ ok: true, ...data });
   } catch (e) {

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ItemCardProps } from "@/types/common";
 
-export function ItemCard({ id, title, imageUrl, href, footerText = "See More >", bgColorClass = "bg-primary-100" }: ItemCardProps) {
+export function ItemCard({ title, imageUrl, href, footerText = "See More >", bgColorClass = "bg-primary-100" }: ItemCardProps) {
   return (
     <div className="relative mt-10.5 overflow-hidden rounded-md border-1 hover:scale-[1.02]">
       <Link href={href}>
