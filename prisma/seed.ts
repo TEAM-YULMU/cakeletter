@@ -6,6 +6,45 @@ const prisma = new PrismaClient();
 async function main() {
   const hashedPassword = await bcrypt.hash("owner1234!", 10); // 공통 비밀번호
 
+  const sampleProducts = [
+    {
+      name: "어버이날 케이크 🌹",
+      description: "신선한 딸기와 생크림이 어우러진 어버이날 맞춤 케이크에요!",
+      price: 29000,
+      imageUrls: ["https://dh-cake-letter.s3.us-east-1.amazonaws.com/store/1/product/1/image_1748325627667_81255.jpeg"],
+    },
+    {
+      name: "로또 케이크 🤑",
+      description: "달콤한 케이크와 로또의 설렘까지! 행운을 기원하는 특별한 케이크입니다.",
+      price: 32000,
+      imageUrls: ["https://dh-cake-letter.s3.us-east-1.amazonaws.com/store/1/product/2/image_1747986188560.jpeg"],
+    },
+    {
+      name: "바다 케이크 🌊",
+      description: "바다를 담은 듯한 푸른색의 케이크로, 여름을 느낄 수 있는 상큼한 맛이에요.",
+      price: 18000,
+      imageUrls: ["https://dh-cake-letter.s3.us-east-1.amazonaws.com/store/1/product/3/image_1747986548849.jpeg"],
+    },
+    {
+      name: "소주 케이크 🍶",
+      description: "소주의 쌉싸름함과 달콤함은 없지만! 소주 한 병이 통으로 들어간 독특한 케이크입니다. 소주를 좋아하는 분들에게 추천!",
+      price: 30000,
+      imageUrls: ["https://dh-cake-letter.s3.us-east-1.amazonaws.com/store/1/product/4/image_1747986622475.jpeg"],
+    },
+    {
+      name: "젠더리빌 케이크 🏳️‍🌈",
+      description: "다양한 색상의 크림과 과일로 만들어진 젠더리빌 케이크입니다. 아들일까? 딸일까? 설렘을 주는 특별한 케이크!",
+      price: 31000,
+      imageUrls: ["https://dh-cake-letter.s3.us-east-1.amazonaws.com/store/1/product/5/image_1747986869109.jpeg"],
+    },
+    {
+      name: "심플 케이크 🎂",
+      description: "깔끔하고 심플한 디자인의 케이크로, 어떤 자리에서도 잘 어울려요. 기본에 충실한 맛!",
+      price: 33000,
+      imageUrls: ["https://dh-cake-letter.s3.us-east-1.amazonaws.com/store/1/product/6/image_1747986899573.jpeg"],
+    },
+  ];
+
   const memberStoreData = [
     {
       member: {
@@ -195,6 +234,27 @@ async function main() {
         memberId: createdMember.id, // 관계 연결
       },
     });
+    if (store.name === "달콤마카롱") {
+      for (const product of sampleProducts) {
+        const createdProduct = await prisma.product.create({
+          data: {
+            storeId: createdMember.id,
+            name: product.name,
+            description: product.description,
+            price: product.price,
+          },
+        });
+
+        for (const url of product.imageUrls) {
+          await prisma.image.create({
+            data: {
+              productId: createdProduct.id,
+              url,
+            },
+          });
+        }
+      }
+    }
   }
 
   console.log("✅ 9명의 OWNER 및 Store 생성 완료");
