@@ -15,7 +15,6 @@ export default function ProductInfo({ product }: Props) {
       {product.options.map((option) => (
         <OptionInfo key={option.id} option={option} />
       ))}
-      {/* <Button className="f16 bg-primary-300 hover:bg-primary-400 h-12 w-full">{"주문하기 >"}</Button> */}
       <CreateOrJoinChatButton storeId={product.id} className="f18 bg-primary-300 hover:bg-primary-400 h-12 w-full">
         {"주문하기 >"}
       </CreateOrJoinChatButton>
