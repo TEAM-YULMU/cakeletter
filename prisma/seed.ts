@@ -9,7 +9,7 @@ async function main() {
   const memberStoreData = [
     {
       member: {
-        name: "사장님1",
+        name: "김민수",
         email: "owner1@cakeletter.com",
         phone: "010-1234-5601",
         birth: new Date("1985-01-01"),
@@ -28,7 +28,7 @@ async function main() {
     },
     {
       member: {
-        name: "사장님2",
+        name: "이지은",
         email: "owner2@cakeletter.com",
         phone: "010-1234-5602",
         birth: new Date("1986-01-02"),
@@ -47,7 +47,7 @@ async function main() {
     },
     {
       member: {
-        name: "사장님3",
+        name: "박정우",
         email: "owner3@cakeletter.com",
         phone: "010-1234-5603",
         birth: new Date("1987-01-03"),
@@ -66,7 +66,7 @@ async function main() {
     },
     {
       member: {
-        name: "사장님4",
+        name: "최유진",
         email: "owner4@cakeletter.com",
         phone: "010-1234-5604",
         birth: new Date("1988-01-04"),
@@ -85,7 +85,7 @@ async function main() {
     },
     {
       member: {
-        name: "사장님5",
+        name: "강도윤",
         email: "owner5@cakeletter.com",
         phone: "010-1234-5605",
         birth: new Date("1989-01-05"),
@@ -104,7 +104,7 @@ async function main() {
     },
     {
       member: {
-        name: "사장님6",
+        name: "정하늘",
         email: "owner6@cakeletter.com",
         phone: "010-1234-5606",
         birth: new Date("1990-01-06"),
@@ -123,7 +123,7 @@ async function main() {
     },
     {
       member: {
-        name: "사장님7",
+        name: "배지훈",
         email: "owner7@cakeletter.com",
         phone: "010-1234-5607",
         birth: new Date("1991-01-07"),
@@ -142,7 +142,7 @@ async function main() {
     },
     {
       member: {
-        name: "사장님8",
+        name: "윤서현",
         email: "owner8@cakeletter.com",
         phone: "010-1234-5608",
         birth: new Date("1992-01-08"),
@@ -161,11 +161,11 @@ async function main() {
     },
     {
       member: {
-        name: "사장님9",
+        name: "장예림",
         email: "owner9@cakeletter.com",
         phone: "010-1234-5609",
         birth: new Date("1993-01-09"),
-        gender: Gender.MALE,
+        gender: Gender.FEMALE,
       },
       store: {
         name: "타르트상점",

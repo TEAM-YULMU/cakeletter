@@ -5,18 +5,22 @@ import { verifySession } from "./sessions";
 import { revalidatePath } from "next/cache";
 import { CHAT_ROUTES } from "@/constants/routes";
 
-export const getChatMessages = async (roomId: number) => {
+export const getChatMessages = async (roomId: number, memberId: number) => {
   const room = await prisma.room.findUnique({
     where: { id: roomId },
-    select: {
-      id: true,
-      name: true,
+    include: {
+      members: {
+        select: { id: true },
+      },
     },
   });
 
   if (!room) {
-    throw new Error("채팅방이 존재하지 않습니다.");
+    throw new Error("NOT_FOUND");
   }
+
+  const isMember = room.members.some((member) => member.id === memberId);
+  if (!isMember) throw new Error("FORBIDDEN");
 
   const messages = await prisma.chat.findMany({
     where: { roomId },

@@ -17,7 +17,7 @@ export default function CreateOrJoinChatButton({ storeId, className, variant, ch
 
   const handleClick = async () => {
     try {
-      const res = await fetch(`/api/chats`, {
+      const res = await fetch(`/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ storeId }),
