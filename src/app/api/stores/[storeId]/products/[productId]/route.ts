@@ -1,6 +1,6 @@
 import { verifySession } from "@/lib/actions/sessions";
 import { prisma } from "@/lib/prisma";
-import { deleteImageFromS3, uploadImageToS3 } from "@/lib/s3";
+import { deleteImageFromS3, uploadFileImageToS3 } from "@/lib/s3";
 import { OptionCategory } from "@/types/product";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -81,7 +81,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ stor
         files
           .filter((file) => file instanceof File)
           .map((file) =>
-            uploadImageToS3({
+            uploadFileImageToS3({
               path: `store/${store.id}/product/${product.id}`,
               image: file,
             })

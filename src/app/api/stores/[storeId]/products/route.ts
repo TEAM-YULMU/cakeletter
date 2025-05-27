@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { uploadImageToS3 } from "@/lib/s3";
+import { uploadFileImageToS3 } from "@/lib/s3";
 import { prisma } from "@/lib/prisma";
 import { verifySession } from "@/lib/actions/sessions";
 import { OptionCategory, ProductPreview } from "@/types/product";
@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
       // s3 업로드
       const urls = await Promise.all(
         files.map((file) =>
-          uploadImageToS3({
+          uploadFileImageToS3({
             path: `store/${store.id}/product/${product.id}`,
             image: file,
           })
