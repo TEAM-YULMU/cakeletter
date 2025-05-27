@@ -3,16 +3,6 @@ import { CHAT_ROUTES } from "@/constants/routes";
 import { SidebarItem } from "./SidebarItem";
 import { getChatRoomsByMember } from "@/data/member";
 
-// const SIDEBAR_ITEM = [
-//   {
-//     id: "1",
-//     name: "이름",
-//     lastChat: "새로운 대화",
-//     icon: <CircleUserRound className="text-gray-600" size={26} />,
-//     href: CHAT_ROUTES.ROOMS,
-//   },
-// ];
-
 export async function Sidebar() {
   const rooms = await getChatRoomsByMember();
 

@@ -4,14 +4,15 @@ import { ChatContainer, MainContainer, Message, MessageInput, MessageList } from
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
 import { useSession } from "@/hooks/session-context";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { socket } from "@/lib/socketClient";
-import { getChatMessages } from "@/lib/actions/chat";
 import { cn } from "@/lib/utils";
 import { ChatHeader } from "@/components/chat/ChatHeader";
 import { ImageInput } from "@/components/Image-Input";
 import SquareImage from "@/components/SquareImage";
+import toast from "react-hot-toast";
+import { CHAT_ROUTES } from "@/constants/routes";
 
 type MessageModel = {
   message: string;
@@ -22,9 +23,24 @@ type MessageModel = {
   createdAt?: Date;
 };
 
+type ChatResponse = {
+  id: number;
+  chat: string | null;
+  imageUrl: string | null;
+  memberId: number;
+  roomId: number;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+  member: {
+    id: number;
+    name: string;
+  };
+};
+
 export default function ChatRoomPage() {
   const imageInput = useRef<HTMLInputElement>(null);
   const { session } = useSession();
+  const router = useRouter();
   const params = useParams();
   const roomId = Number(params.chatId);
 
@@ -34,23 +50,36 @@ export default function ChatRoomPage() {
   useEffect(() => {
     if (!roomId || !session?.id) return;
 
-    // 기존 채팅 불러오기
-    getChatMessages(roomId).then((data) => {
-      setRoomName(data.room.name); // 채팅방 이름 -> 채팅방 이름 가게 이름으로 저장
+    const fetchMessages = async () => {
+      const res = await fetch(`/api/chat/${roomId}/messages`);
+
+      if (!res.ok) {
+        const data = await res.json();
+        toast.error(data.message || "채팅방 정보를 불러올 수 없습니다.");
+        router.push(CHAT_ROUTES.ROOMS);
+        router.refresh();
+        return;
+      }
+
+      const data = await res.json();
+
+      setRoomName(data.room.name);
 
       const formatted = data.messages.map(
-        (chat): MessageModel => ({
+        (chat: ChatResponse): MessageModel => ({
           message: chat.chat ?? "",
           image: chat.imageUrl ?? "",
           sender: chat.member?.name ?? "unknown",
-          direction: chat.memberId === Number(session.id) ? "outgoing" : "incoming",
+          direction: chat.memberId === Number(session?.id) ? "outgoing" : "incoming",
           position: "single",
           createdAt: new Date(chat.createdAt),
         })
       );
 
       setMessages(formatted);
-    });
+    };
+
+    fetchMessages();
 
     // 소켓 룸 입장
     socket.emit("onJoinRoom", roomId);
