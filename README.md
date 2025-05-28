@@ -170,3 +170,59 @@ Next.js App Router + Prisma + Socket.IO 기반의 1:1 실시간 채팅 기능입
 </td>
 </tr>
 </table>
+
+### ERD
+
+![Image](https://github.com/user-attachments/assets/00b65be0-9c13-4f4c-99ad-caff5d448ae3)
+
+### Directory Structure
+
+```
+app
+│
+├─(auth)
+│  │  layout.tsx
+│  │
+│  ├─login
+│  │      page.tsx
+│  │
+│  └─signup
+│      ├─owner
+│      │      page.tsx
+│      │
+│      └─user
+│              page.tsx
+│
+├─(user)
+│  │  layout.tsx
+│  │  page.tsx
+│  │
+│  └─store
+│      └─[storeId]
+│          │  page.tsx
+│          │
+│          └─product
+│              │  page.tsx
+│              │
+│              └─[productId]
+│                      page.tsx
+│
+├─chat
+│  │  layout.tsx
+│  │  page.tsx
+│  │
+│  └─[chatId]
+│          page.tsx
+│
+└─owner
+    │  layout.tsx
+    │  page.tsx
+    │
+    └─product
+        ├─new
+        │      page.tsx
+        │
+        └─[productId]
+            └─edit
+                    page.tsx
+```
