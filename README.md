@@ -32,7 +32,7 @@
 
 | 구분             | 사용 기술                                         |
 | ---------------- | ------------------------------------------------- |
-| **Frontend ❤️**  | Next.js 15, TypeScript 4, Tailwind CSS, Shadcn/ui |
+| **Frontend ❤️**  | Next.js 15, TypeScript, Tailwind CSS 4, Shadcn/ui |
 | **Backend 🧡**   | Next.js API Routes, Prisma ORM, MySQL             |
 | **Storage 💛**   | AWS S3 (이미지 업로드)                            |
 | **Dev Tools 💚** | Yarn, Husky, ESLint, Prettier                     |
@@ -45,7 +45,7 @@
 
 |                                                                **박지환**                                                                |                                                                 **손혜정**                                                                 |                                                                   **박승희**                                                                    |                                                              **김효준**                                                              |
 | :--------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------: |
-| [<img src="https://avatars.githubusercontent.com/u/77378301?v=4" height=150 width=150> <br/> @jhpark0888](https://github.com/jhpark0888) | [<img src="https://avatars.githubusercontent.com/u/74630428?v=4" height=150 width=150> <br/> @HyejeongSon](https://github.com/HyejeongSon) | [<img src="https://avatars.githubusercontent.com/u/159995296?v=4" height=150 width=150> <br/> @seunghui-park](https://github.com/seunghui-park) | [<img src="https://avatars.githubusercontent.com/u/66195226?v=4" height=150 width=150> <br/> @Hyo-joon](https://github.com/Hyo-joon) |
+| [<img src="https://avatars.githubusercontent.com/u/77378301?v=4" height=150 width=150> <br/> @jhpark0888](https://github.com/jhpark0888) | [<img src="https://avatars.githubusercontent.com/u/74630428?v=4" height=150 width=150> <br/> @HyejeongSon](https://github.com/HyejeongSon) | [<img src="https://avatars.githubusercontent.com/u/159995296?v=4" height=150 width=150> <br/> @seunghui-park](https://github.com/seunghui-park) | [<img width="150" height="150" alt="Image" src="https://github.com/user-attachments/assets/3e428a39-411f-4394-bd8a-6f969d70c608" /> <br/> @Hyo-joon](https://github.com/Hyo-joon) |
 |               상품 등록 페이지,API 구현<br>상품 수정 페이지,API 구현<br>상품 상세 페이지,API 구현<br>상품 목록 페이지 구현               |                 ERD 설계 및 prisma 세팅<br>헤더 및 네비게이션바<br>로그인 및 회원가입 기능<br>채팅 crud<br>middleware 처리                 |                              디자인<br>프로젝트 초기 세팅<br>가게 목록 페이지,API 구현<br>가게 상세 페이지,API구현                              |                                    ERD 설계<br>소켓 서버 구축<br>채팅 crud 구현<br>발표 자료 제작                                    |
 
 </div>
